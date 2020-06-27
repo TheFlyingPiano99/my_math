@@ -1,7 +1,7 @@
 //
 // Created by simon on 2020. 06. 27..
 //
-#include "my_vectors.h"
+#include "my_vector.h"
 
 Vector3D& Vector3D::operator*=(float s) {
     x *= s;

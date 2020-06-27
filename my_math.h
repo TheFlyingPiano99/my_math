@@ -5,7 +5,7 @@
 #ifndef MY_MATH_MY_MATH_H
 #define MY_MATH_MY_MATH_H
 
-#include "my_vectors.h"
+#include "my_vector.h"
 #include "my_matrix.h"
 #include "my_functions.h"
 #include "Analise.h"
