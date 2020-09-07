@@ -8,46 +8,58 @@
 #include <complex>
 #include <vector>
 
-    template<typename t = std::complex<float>>
+#include "my_vector.h"
+
+    /**
+     * Float matrix, with column-major order (template size)
+     * @tparam r - number of row
+     * @tparam c - number of columns
+     */
+    template<unsigned int row, unsigned int column>
     class Matrix {
-        size_t row;
-        size_t column;
-        std::vector<std::vector<t>> mx;
+        float n[column][row];
     public:
-        Matrix(size_t r, size_t c) : row(r), column(c) {
-            mx.resize(row);
-            for (size_t i = 0; i < row; i++) {
-                mx[i].resize(column);
-            }
+        Matrix<row, column>() = default;
+
+        float& operator() (int r, int c) { //indexeles (sor, oszlop)
+            return (n[c][r]);
         }
 
-        std::vector<t> &operator[](int r) {
-            return mx[r];
+        const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
+            return (n[c][r]);
         }
 
-        const std::vector<t> &operator[](int r) const{
-            return mx[r];
+        Vector<row>& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
+            return (*reinterpret_cast<Vector<row>>(n[c]));
         }
 
-        void clear();
-
-        void fill(t val);
-
-        int getRowN() const{
-            return row;
+        const Vector<row>& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
+            return (*reinterpret_cast<Vector<row>>(n[c]));
         }
 
-        int getColumnN() const{
-            return column;
-        }
-
-        Matrix<t> operator*(Matrix<t> &mx2);
+        void fill (float val);
     };
 
-    std::ostream& operator<<(std::ostream&, const Matrix<float>&);
+///Multiplication
+template<unsigned int row1, unsigned int column1row2, unsigned int column2>
+Matrix<row1, column2> operator*(const Matrix<row1, column1row2>& A, const Matrix<column1row2, column2>& B);
 
+template<unsigned int row, unsigned int column>
+Vector<row> operator*(const Matrix<row, column>& M, const Vector<row>& v);
 
-#include "my_vector.h"
+template<unsigned int row, unsigned int column>
+inline Matrix<row, column> operator*(float s, const Matrix<row, column>& M);
+
+template<unsigned int row, unsigned int column>
+inline Matrix<column, row> Transpose(const Matrix<row, column>& M);
+
+///Addition / Subtraction
+template<unsigned int row, unsigned int column>
+inline Matrix<row, column> operator+(const Matrix<row, column>& A, const Matrix<row, column>& B);
+
+template<unsigned int row, unsigned int column>
+inline Matrix<row, column> operator-(const Matrix<row, column>& A, const Matrix<row, column>& B);
+
 
 class Matrix3D {
     float n[3][3]; //column-major - Oszlopfolytonos tarolas.
@@ -67,19 +79,19 @@ public:
         n[2][0] = c.x; n[2][1] = c.y; n[2][2] = c.z;
     }
 
-    float& operator() (int r, int c) {
+    float& operator() (int r, int c) { //indexeles (sor, oszlop)
         return (n[c][r]);
     }
 
-    const float& operator() (int r, int c) const {
+    const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
         return (n[c][r]);
     }
 
-    Vector3D& operator[] (int c) {
+    Vector3D& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
         return (*reinterpret_cast<Vector3D*>(n[c]));
     }
 
-    const Vector3D& operator[] (int c) const {
+    const Vector3D& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
         return (*reinterpret_cast<const Vector3D*>(n[c]));
     }
 
@@ -118,19 +130,19 @@ public:
         n[3][0] = d.x; n[3][1] = d.y; n[3][2] = d.z; n[3][3] = d.w;
     }
 
-    float& operator() (int r, int c) {
+    float& operator() (int r, int c) { //indexeles (sor, oszlop)
         return (n[c][r]);
     }
 
-    const float& operator() (int r, int c) const {
+    const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
         return (n[c][r]);
     }
 
-    Vector4D& operator[] (int c) {
+    Vector4D& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
         return (*reinterpret_cast<Vector4D*>(n[c]));
     }
 
-    const Vector4D& operator[] (int c) const {
+    const Vector4D& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
         return (*reinterpret_cast<const Vector4D*>(n[c]));
     }
 

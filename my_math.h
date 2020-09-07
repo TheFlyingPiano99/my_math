@@ -8,6 +8,6 @@
 #include "my_vector.h"
 #include "my_matrix.h"
 #include "my_functions.h"
-#include "Analise.h"
+//#include "Analise.h"
 
 #endif //MY_MATH_MY_MATH_H

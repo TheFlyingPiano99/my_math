@@ -21,17 +21,13 @@ int main() {
 
 
     ///Matrix-------------------------------------------------
-    Matrix<float> mx1(10,10);
-    Matrix<float> mx2(10,12);
-    mx1.clear();
-    mx2.clear();
+    Matrix<10, 10> mx1;
+    Matrix<10, 12> mx2;
 
     mx1.fill(8);
     mx2.fill(2);
 
-    mx1 = mx1 * mx2;
-
-    std::cout << mx1;
+    ///
 
     ///Small matrices:
     Matrix3D mx3d(1,0,0,0,1,0,0,0,1);

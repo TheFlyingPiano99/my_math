@@ -4,6 +4,13 @@
 
 #include <cmath>
 
+template <unsigned int dimension>
+struct Vector {
+    float n[dimension];
+public:
+    Vector<dimension>() = default;
+};
+
 struct Vector1D {
     float x;
     Vector1D() = default;

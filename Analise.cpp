@@ -4,7 +4,8 @@
 
 #include "Analise.h"
 
-void Analiser::create_discrete_fourier_transform_mx (const std::complex<float>& omega, Matrix<>& ebbe) {
+template<unsigned int r, unsigned int c>
+void Analiser::create_discrete_fourier_transform_mx (const std::complex<float>& omega, Matrix<r, c>& ebbe) {
     size_t N = ebbe.getRowN();
     for (size_t i = 0; i < N; i++) {
         for (size_t j = 0; j < N; j++) {
@@ -14,13 +15,13 @@ void Analiser::create_discrete_fourier_transform_mx (const std::complex<float>& 
 
 }
 
-
-void Analiser::discrete_fourier_transform(Matrix<float>& f, Matrix<std::complex<float>>& f_transform) {
+template<unsigned int r, unsigned int c>
+void Analiser::discrete_fourier_transform(Matrix<r, c>& f, Matrix<r, c>& f_transform) {
     const int N = f.getColumnN();
 
     std::complex<float> omega = expf(2 * M_PI / N);
 
-    Matrix<> transf_mx(N, N);
+    Matrix<r, c> transf_mx(N, N);
     create_discrete_fourier_transform_mx(omega, transf_mx);
 /*
     f_transform = f * transf_mx;
