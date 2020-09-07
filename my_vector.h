@@ -9,7 +9,151 @@ struct Vector {
     float n[dimension];
 public:
     Vector<dimension>() = default;
+
+    float& operator[] (int i) {
+        return ((&n)[i]);
+    }
+
+    const float& operator[] (int i) const {
+        return ((&n)[i]);
+    }
+
+    Vector<dimension>& operator*=(float s);
+    Vector<dimension>& operator/=(float s);
+
+    Vector<dimension>& operator+=(const Vector<dimension>& v);
+    Vector<dimension>& operator-=(const Vector<dimension>& v);
 };
+
+template<unsigned int dimension>
+Vector<dimension> &Vector<dimension>::operator*=(float s) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] *= s;
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+Vector<dimension> &Vector<dimension>::operator/=(float s) {
+    Vector<dimension> retV;
+    s = 1.0F / s;
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] *= s;
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+Vector<dimension> &Vector<dimension>::operator+=(const Vector<dimension> &v) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] += v[i];
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+Vector<dimension> &Vector<dimension>::operator-=(const Vector<dimension> &v) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] -= v[i];
+    }
+    return retV;
+}
+
+///Multiplication
+
+template<unsigned int dimension>
+inline Vector<dimension> operator* (const Vector<dimension>& v, float s) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = v[i] * s;
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> operator* (float s, const Vector<dimension>& v) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = v[i] * s;
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline float Dot (const Vector<dimension>& a, const Vector<dimension>& b) {
+    float sum = 0;
+    for (unsigned int i = 0; i < dimension; i++) {
+        sum += a[i] * b[i];
+    }
+    return sum;
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> operator/ (const Vector<dimension>& v, float s) {
+    s = 1.0F / s;
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = v[i] * s;
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> operator/ (const Vector<dimension>& a, const Vector<dimension>& b) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = a[i] * (1.0F/b[i]);
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> operator-(const Vector<dimension>& v) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = -v[i];
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline float Magnitude (const Vector<dimension>& v) {
+    float sum = 0;
+    for (unsigned int i = 0; i < dimension; i++) {
+        sum += v[i]*v[i];
+    }
+    return sqrtf(sum);
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> Normalize (const Vector<dimension>& v) {
+    return  (v / Magnitude(v));
+}
+
+///Addition / Subtraction
+template<unsigned int dimension>
+inline Vector<dimension> operator+ (const Vector<dimension>& a, const Vector<dimension>& b) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = a[i] + b[i];
+    }
+    return retV;
+}
+
+template<unsigned int dimension>
+inline Vector<dimension> operator- (const Vector<dimension>& a, const Vector<dimension>& b) {
+    Vector<dimension> retV;
+    for (unsigned int i = 0; i < dimension; i++) {
+        retV[i] = a[i] - b[i];
+    }
+    return retV;
+}
+
+
+///-------------------------------------------------------------------------------
 
 struct Vector1D {
     float x;

@@ -85,6 +85,14 @@ Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
         }
     }
 }
+template<unsigned int row, unsigned int column>
+Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < row; r++) {
+            M(r, c) = M(r, c) * s;
+        }
+    }
+}
 
 template<unsigned int row, unsigned int column>
 inline Matrix<column, row> Transpose(const Matrix<row, column>& M) {
@@ -173,6 +181,7 @@ public:
 Matrix3D operator*(const Matrix3D& A, const Matrix3D& B);
 Vector3D operator*(const Matrix3D& M, const Vector3D& v);
 inline Matrix3D operator*(float s, const Matrix3D& M);
+inline Matrix3D operator*(const Matrix3D& M, float s);
 
 inline Matrix3D Transpose(const Matrix3D& M);
 
@@ -224,6 +233,7 @@ public:
 Matrix4D operator*(const Matrix4D& A, const Matrix4D& B);
 Vector4D operator*(const Matrix4D& M, const Vector4D& v);
 inline Matrix4D operator*(float s, const Matrix4D& M);
+inline Matrix4D operator*(const Matrix4D& M, float s);
 
 inline Matrix4D Transpose(const Matrix4D& M);
 

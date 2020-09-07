@@ -38,6 +38,12 @@ Matrix3D operator*(float s, const Matrix3D &M) {
                      s * M(2,0), s * M(2,1), s * M(2,2)
     ));
 }
+Matrix3D operator*(const Matrix3D &M, float s) {
+    return (Matrix3D(s * M(0,0), s * M(0,1), s * M(0,2),
+                     s * M(1,0), s * M(1,1), s * M(1,2),
+                     s * M(2,0), s * M(2,1), s * M(2,2)
+    ));
+}
 
 Matrix3D Transpose(const Matrix3D &M) {
     return (Matrix3D(M(0,0), M(1,0), M(2,0),
@@ -100,6 +106,14 @@ Matrix4D operator*(float s, const Matrix4D &M) {
                      s * M(3,0), s * M(3,1), s * M(3,2), s * M(3,3)
     ));
 }
+Matrix4D operator*(const Matrix4D &M, float s) {
+    return (Matrix4D(s * M(0,0), s * M(0,1), s * M(0,2), s * M(0,3),
+                     s * M(1,0), s * M(1,1), s * M(1,2), s * M(1,3),
+                     s * M(2,0), s * M(2,1), s * M(2,2), s * M(2,3),
+                     s * M(3,0), s * M(3,1), s * M(3,2), s * M(3,3)
+    ));
+}
+
 
 Matrix4D Transpose(const Matrix4D& M) {
     return (Matrix4D(M(0,0), M(1,0), M(2,0), M(3,0),
@@ -124,6 +138,8 @@ Matrix4D operator-(const Matrix4D &A, const Matrix4D &B) {
                      A(3,0) - B(3,0), A(3,1) - B(3,1), A(3,2) - B(3,2), A(3,3) - B(3,3)
     ));
 }
+
+
 
 
 
