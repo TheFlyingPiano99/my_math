@@ -4,20 +4,7 @@
 
 #include <stdexcept>
 #include "my_matrix.h"
-#include "Analise.h"
 
-
-
-
-
-template<unsigned int row, unsigned int column>
-void Matrix<row, column>::fill(float val) {
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
-            n[c][r] = val;
-        }
-    }
-}
 
 
 ///Global:
@@ -138,44 +125,6 @@ Matrix4D operator-(const Matrix4D &A, const Matrix4D &B) {
     ));
 }
 
-template<unsigned int row1, unsigned int column1row2, unsigned int column2>
-Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix<column1row2, column2> &B) {
-    Matrix<row1, column2> retM;
-    for (unsigned int c = 0; c < column2; c++) {
-        for (unsigned int r = 0; r < row1; r++) {
-            float n = 0;
-            for (unsigned int k = 0; k < column1row2; k++) {
-                n += A(r, k) * B(k, c);
-            }
-            retM(r, c) = n;
-        }
-    }
-    return retM;
-}
-
-template<unsigned int row, unsigned int column>
-Vector<row> operator*(const Matrix<row, column> &M, const Vector<row> &v) {
-    Vector<row> retV;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
-            float n = 0;
-            for (unsigned int k = 0; k < column; k++) {
-                n += M(r, k) * v[r];
-            }
-            retV[r] = n;
-        }
-    }
-    return retV;
-}
-
-template<unsigned int row, unsigned int column>
-Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
-            M(r, c) = M(r, c) * s;
-        }
-    }
-}
 
 
 

@@ -51,9 +51,5 @@
 
     Vector4D cross_product(Vector4D a, Vector4D b);
 
-///Trigonometry:
-    float sin(Vector4D v1, Vector4D v2);
-
-    float cos(Vector4D v1, Vector4D v2);
 
 #endif //LEGITARSASAG_FUNCTIONS_H

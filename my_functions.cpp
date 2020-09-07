@@ -18,11 +18,3 @@ Vector4D cross_product(Vector4D a, Vector4D b) {
     return res;
 }
 
-///Trigonometry:
-float sin (Vector4D v1, Vector4D v2) {
-    return Magnitude(cross_product(v1, v2)) / (Magnitude(v1) * Magnitude(v2));
-}
-
-float cos (Vector4D v1, Vector4D v2) {
-    return dot_product(v1, v2) / (Magnitude(v1) * Magnitude(v2));
-}
