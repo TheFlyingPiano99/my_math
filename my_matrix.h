@@ -60,6 +60,18 @@ inline Matrix<row, column> operator+(const Matrix<row, column>& A, const Matrix<
 template<unsigned int row, unsigned int column>
 inline Matrix<row, column> operator-(const Matrix<row, column>& A, const Matrix<row, column>& B);
 
+template<unsigned int row, unsigned int column>
+std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> &M) {
+    for (unsigned int r = 0; r < row; r++) {
+        stream << "|";
+        for (unsigned int c = 0; c < column; c++) {
+            stream << M(r, c) << "|";
+        }
+        stream << "\n";
+    }
+    return stream;
+}
+
 
 class Matrix3D {
     float n[3][3]; //column-major - Oszlopfolytonos tarolas.

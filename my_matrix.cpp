@@ -7,7 +7,6 @@
 #include "Analise.h"
 
 
-std::ostream& operator<<(std::ostream&, const Matrix<float>&);
 
 
 
@@ -22,20 +21,6 @@ void Matrix<row, column>::fill(float val) {
 
 
 ///Global:
-std::ostream &operator<<(std::ostream& os, const Matrix<float>& mx) {
-    size_t row = mx.getRowN();
-    size_t column = mx.getColumnN();
-    for (size_t r = 0; r < row; r++) {
-        for (size_t c = 0; c < column; c++) {
-            os << mx[r][c];
-            if (column-1 != c) {
-                os << " | ";
-            }
-        }
-        os << std::endl;
-    }
-    return os;
-}
 
 Matrix3D operator*(const Matrix3D& A, const Matrix3D& B) {
     return(Matrix3D(
@@ -152,4 +137,46 @@ Matrix4D operator-(const Matrix4D &A, const Matrix4D &B) {
                      A(3,0) - B(3,0), A(3,1) - B(3,1), A(3,2) - B(3,2), A(3,3) - B(3,3)
     ));
 }
+
+template<unsigned int row1, unsigned int column1row2, unsigned int column2>
+Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix<column1row2, column2> &B) {
+    Matrix<row1, column2> retM;
+    for (unsigned int c = 0; c < column2; c++) {
+        for (unsigned int r = 0; r < row1; r++) {
+            float n = 0;
+            for (unsigned int k = 0; k < column1row2; k++) {
+                n += A(r, k) * B(k, c);
+            }
+            retM(r, c) = n;
+        }
+    }
+    return retM;
+}
+
+template<unsigned int row, unsigned int column>
+Vector<row> operator*(const Matrix<row, column> &M, const Vector<row> &v) {
+    Vector<row> retV;
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < row; r++) {
+            float n = 0;
+            for (unsigned int k = 0; k < column; k++) {
+                n += M(r, k) * v[r];
+            }
+            retV[r] = n;
+        }
+    }
+    return retV;
+}
+
+template<unsigned int row, unsigned int column>
+Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < row; r++) {
+            M(r, c) = M(r, c) * s;
+        }
+    }
+}
+
+
+
 

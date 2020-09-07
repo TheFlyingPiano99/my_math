@@ -24,10 +24,12 @@ int main() {
     Matrix<10, 10> mx1;
     Matrix<10, 12> mx2;
 
-    mx1.fill(8);
-    mx2.fill(2);
+    //mx1.fill(8);
+    //mx2.fill(2);
 
-    ///
+//    Matrix<10, 12> mx3 = mx1 * mx2;
+
+    //std::cout << mx3;
 
     ///Small matrices:
     Matrix3D mx3d(1,0,0,0,1,0,0,0,1);
