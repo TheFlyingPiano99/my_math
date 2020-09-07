@@ -37,6 +37,10 @@ float Cos(Vector2D v1, Vector2D v2) {
     return (Dot(v1, v2) / (Magnitude(v1) * Magnitude(v2)));
 }
 
+float Tan(Vector2D v1, Vector2D v2) {
+    return ((v1.x * v2.y - v1.y * v2.x) / Dot(v1, v2));
+}
+
 ///------------------------------------------------------------------------
 
 Vector3D& Vector3D::operator*=(float s) {
@@ -75,6 +79,7 @@ float Sin(Vector3D v1, Vector3D v2) {
 float Cos(Vector3D v1, Vector3D v2) {
     return Dot(v1, v2) / (Magnitude(v1) * Magnitude(v2));
 }
+
 
 ///----------------------------------------------------------------------------------
 ///4D:
