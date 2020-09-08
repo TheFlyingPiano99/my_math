@@ -63,35 +63,37 @@ Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix
 }
 
 template<unsigned int row, unsigned int column>
-Vector<row> operator*(const Matrix<row, column> &M, const Vector<row> &v) {
+Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
     Vector<row> retV;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
-            float n = 0;
-            for (unsigned int k = 0; k < column; k++) {
-                n += M(r, k) * v[r];
-            }
-            retV[r] = n;
+    for (unsigned int r = 0; r < row; r++) {
+        float n = 0;
+        for (unsigned int k = 0; k < column; k++) {
+            n += M(r, k) * v[k];
         }
+        retV[r] = n;
     }
     return retV;
 }
 
 template<unsigned int row, unsigned int column>
 Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
+    Vector<row> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
-            M(r, c) = M(r, c) * s;
+            retM(r, c) = M(r, c) * s;
         }
     }
+    return retM;
 }
 template<unsigned int row, unsigned int column>
 Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
+    Vector<row> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
-            M(r, c) = M(r, c) * s;
+            retM(r, c) = M(r, c) * s;
         }
     }
+    return retM;
 }
 
 template<unsigned int row, unsigned int column>
