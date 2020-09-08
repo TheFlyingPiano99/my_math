@@ -9,6 +9,8 @@ int main() {
     Matrix<4, 3> mx2{};
     Matrix<4, 3> mx3{};
 
+    mx3 = mx1 * mx2;
+
     mx1.fill(5);
     mx2.fill(2);
     mx3.fill(1);
@@ -18,11 +20,12 @@ int main() {
 
     //Operations:
 
-    Matrix4D mx4(v1,v1, v1, v1);
-    v2 = mx4 * v2;
+    Matrix4D mx4(v1,v2, v1, v1);
+    Matrix4D mx5(v1,v2, v1, v1);
+    mx4 = mx4 + mx5;
 
     //Output:
-    std::cout << mx4(0,0) << std::endl;
+    std::cout << mx4(3,2) << std::endl;
     std::cout << v2.x << ", " << v2.y << ", " << v2.z << ", " << v2.w << std::endl;
 
     return 0;

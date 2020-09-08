@@ -10,45 +10,45 @@
 
 #include "my_vector.h"
 
-    /**
-     * Float matrix, with column-major order (template size)
-     * @tparam r - number of row
-     * @tparam c - number of columns
-     */
-    template<unsigned int row, unsigned int column>
-    class Matrix {
-        float n[column][row];
-    public:
-        Matrix<row, column>() = default;
+/**
+ * Float matrix, with column-major order (template size)
+ * @tparam r - number of row
+ * @tparam c - number of columns
+ */
+template<unsigned int row, unsigned int column>
+class Matrix {
+    float n[column][row];
+public:
+    Matrix<row, column>() = default;
 
-        float& operator() (int r, int c) { //indexeles (sor, oszlop)
-            return (n[c][r]);
-        }
+    float& operator() (int r, int c) { //indexeles (sor, oszlop)
+        return (n[c][r]);
+    }
 
-        const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
-            return (n[c][r]);
-        }
+    const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
+        return (n[c][r]);
+    }
 
-        Vector<row>& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
-            return (*reinterpret_cast<Vector<row>*>(n[c]));
-        }
+    Vector<row>& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
+        return (*reinterpret_cast<Vector<row>*>(n[c]));
+    }
 
-        const Vector<row>& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
-            return (*reinterpret_cast<Vector<row>*>(n[c]));
-        }
+    const Vector<row>& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
+        return (*reinterpret_cast<Vector<row>*>(n[c]));
+    }
 
-        void fill(float val) {
-            for (unsigned int c = 0; c < column; c++) {
-                for (unsigned int r = 0; r < row; r++) {
-                    n[c][r] = val;
-                }
+    void fill(float val) {
+        for (unsigned int c = 0; c < column; c++) {
+            for (unsigned int r = 0; r < row; r++) {
+                n[c][r] = val;
             }
         }
-    };
+    }
+};
 
 ///Multiplication
 template<unsigned int row1, unsigned int column1row2, unsigned int column2>
-Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix<column1row2, column2> &B) {
+inline Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix<column1row2, column2> &B) {
     Matrix<row1, column2> retM;
     for (unsigned int c = 0; c < column2; c++) {
         for (unsigned int r = 0; r < row1; r++) {
@@ -63,7 +63,7 @@ Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix
 }
 
 template<unsigned int row, unsigned int column>
-Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
+inline Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
     Vector<row> retV;
     for (unsigned int r = 0; r < row; r++) {
         float n = 0;
@@ -76,7 +76,7 @@ Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
 }
 
 template<unsigned int row, unsigned int column>
-Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
+inline Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
     Matrix<row, column> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
@@ -86,7 +86,7 @@ Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
     return retM;
 }
 template<unsigned int row, unsigned int column>
-Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
+inline Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
     Matrix<row, column> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
@@ -131,7 +131,7 @@ inline Matrix<row, column> operator-(const Matrix<row, column>& A, const Matrix<
 }
 
 template<unsigned int row, unsigned int column>
-std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> &M) {
+inline std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> &M) {
     for (unsigned int r = 0; r < row; r++) {
         stream << "|";
         for (unsigned int c = 0; c < column; c++) {
@@ -182,14 +182,14 @@ public:
 ///Multiplication
 Matrix3D operator*(const Matrix3D& A, const Matrix3D& B);
 Vector3D operator*(const Matrix3D& M, const Vector3D& v);
-inline Matrix3D operator*(float s, const Matrix3D& M);
-inline Matrix3D operator*(const Matrix3D& M, float s);
+Matrix3D operator*(float s, const Matrix3D& M);
+Matrix3D operator*(const Matrix3D& M, float s);
 
-inline Matrix3D Transpose(const Matrix3D& M);
+Matrix3D Transpose(const Matrix3D& M);
 
 ///Addition / Subtraction
-inline Matrix3D operator+(const Matrix3D& A, const Matrix3D& B);
-inline Matrix3D operator-(const Matrix3D& A, const Matrix3D& B);
+Matrix3D operator+(const Matrix3D& A, const Matrix3D& B);
+Matrix3D operator-(const Matrix3D& A, const Matrix3D& B);
 
 ///4D:
 class Matrix4D {
@@ -234,13 +234,13 @@ public:
 ///Multiplication
 Matrix4D operator*(const Matrix4D& A, const Matrix4D& B);
 Vector4D operator*(const Matrix4D& M, const Vector4D& v);
-inline Matrix4D operator*(float s, const Matrix4D& M);
-inline Matrix4D operator*(const Matrix4D& M, float s);
+Matrix4D operator*(float s, const Matrix4D& M);
+Matrix4D operator*(const Matrix4D& M, float s);
 
-inline Matrix4D Transpose(const Matrix4D& M);
+Matrix4D Transpose(const Matrix4D& M);
 
 ///Addition / Subtraction
-inline Matrix4D operator+(const Matrix4D& A, const Matrix4D& B);
-inline Matrix4D operator-(const Matrix4D& A, const Matrix4D& B);
+Matrix4D operator+(const Matrix4D& A, const Matrix4D& B);
+Matrix4D operator-(const Matrix4D& A, const Matrix4D& B);
 
 #endif //LEGITARSASAG_MATRIX_H
