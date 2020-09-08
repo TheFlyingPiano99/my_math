@@ -30,11 +30,11 @@
         }
 
         Vector<row>& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
-            return (*reinterpret_cast<Vector<row>>(n[c]));
+            return (*reinterpret_cast<Vector<row>*>(n[c]));
         }
 
         const Vector<row>& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
-            return (*reinterpret_cast<Vector<row>>(n[c]));
+            return (*reinterpret_cast<Vector<row>*>(n[c]));
         }
 
         void fill(float val) {
@@ -77,7 +77,7 @@ Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
 
 template<unsigned int row, unsigned int column>
 Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
-    Vector<row> retM;
+    Matrix<row, column> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
             retM(r, c) = M(r, c) * s;
@@ -87,7 +87,7 @@ Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
 }
 template<unsigned int row, unsigned int column>
 Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
-    Vector<row> retM;
+    Matrix<row, column> retM;
     for (unsigned int c = 0; c < column; c++) {
         for (unsigned int r = 0; r < row; r++) {
             retM(r, c) = M(r, c) * s;
@@ -99,8 +99,8 @@ Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
 template<unsigned int row, unsigned int column>
 inline Matrix<column, row> Transpose(const Matrix<row, column>& M) {
     Matrix<column, row> retM;
-    for (unsigned int c; c < column; c++) {
-        for (unsigned int r; r < row; r++) {
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < row; r++) {
             retM(c, r) = M(r, c);
         }
     }
@@ -111,8 +111,8 @@ inline Matrix<column, row> Transpose(const Matrix<row, column>& M) {
 template<unsigned int row, unsigned int column>
 inline Matrix<row, column> operator+(const Matrix<row, column>& A, const Matrix<row, column>& B) {
     Matrix<row, column> retM;
-    for (unsigned int c; c < column; c++) {
-        for (unsigned int r; r < column; r++) {
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < column; r++) {
             retM(r, c) = A(r, c) + B(r, c);
         }
     }
@@ -122,8 +122,8 @@ inline Matrix<row, column> operator+(const Matrix<row, column>& A, const Matrix<
 template<unsigned int row, unsigned int column>
 inline Matrix<row, column> operator-(const Matrix<row, column>& A, const Matrix<row, column>& B) {
     Matrix<row, column> retM;
-    for (unsigned int c; c < column; c++) {
-        for (unsigned int r; r < column; r++) {
+    for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int r = 0; r < column; r++) {
             retM(r, c) = A(r, c) - B(r, c);
         }
     }

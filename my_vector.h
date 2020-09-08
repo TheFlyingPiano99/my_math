@@ -3,6 +3,7 @@
 
 
 #include <cmath>
+#include <iostream>
 
 template <unsigned int dimension>
 struct Vector {
@@ -11,11 +12,11 @@ public:
     Vector<dimension>() = default;
 
     float& operator[] (int i) {
-        return ((&n)[i]);
+        return (n[i]);
     }
 
     const float& operator[] (int i) const {
-        return ((&n)[i]);
+        return (n[i]);
     }
 
     Vector<dimension>& operator*=(float s);
@@ -27,39 +28,35 @@ public:
 
 template<unsigned int dimension>
 Vector<dimension> &Vector<dimension>::operator*=(float s) {
-    Vector<dimension> retV;
     for (unsigned int i = 0; i < dimension; i++) {
         n[i] *= s;
     }
-    return retV;
+    return (*this);
 }
 
 template<unsigned int dimension>
 Vector<dimension> &Vector<dimension>::operator/=(float s) {
-    Vector<dimension> retV;
     s = 1.0F / s;
     for (unsigned int i = 0; i < dimension; i++) {
         n[i] *= s;
     }
-    return retV;
+    return (*this);
 }
 
 template<unsigned int dimension>
 Vector<dimension> &Vector<dimension>::operator+=(const Vector<dimension> &v) {
-    Vector<dimension> retV;
     for (unsigned int i = 0; i < dimension; i++) {
         n[i] += v[i];
     }
-    return retV;
+    return (*this);
 }
 
 template<unsigned int dimension>
 Vector<dimension> &Vector<dimension>::operator-=(const Vector<dimension> &v) {
-    Vector<dimension> retV;
     for (unsigned int i = 0; i < dimension; i++) {
         n[i] -= v[i];
     }
-    return retV;
+    return (*this);
 }
 
 ///Multiplication
@@ -152,6 +149,18 @@ inline Vector<dimension> operator- (const Vector<dimension>& a, const Vector<dim
     return retV;
 }
 
+template<unsigned int dimension>
+std::ostream& operator<< (std::ostream& stream, Vector<dimension>& v) {
+    stream <<"(";
+    for (int i = 0; i < dimension; ++i) {
+        stream << v[i];
+        if (i != dimension-1) {
+            stream << ", ";
+        }
+    }
+    stream <<")";
+    return stream;
+}
 
 ///-------------------------------------------------------------------------------
 
