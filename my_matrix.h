@@ -193,7 +193,7 @@ inline Matrix3D operator-(const Matrix3D& A, const Matrix3D& B);
 
 ///4D:
 class Matrix4D {
-    float n[3][3]; //column-major - Oszlopfolytonos tarolas.
+    float n[4][4]; //column-major - Oszlopfolytonos tarolas.
 public:
     Matrix4D() = default;
     Matrix4D(float n00, float n01,float n02, float n03,

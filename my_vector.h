@@ -254,6 +254,7 @@ float Sin (Vector2D v1, Vector2D v2);
 float Cos (Vector2D v1, Vector2D v2);
 
 float Tan (Vector2D v1, Vector2D v2);
+
 ///------------------------------------------------------
 
 struct Vector3D {

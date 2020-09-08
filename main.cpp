@@ -8,29 +8,22 @@ int main() {
     Matrix<4,4> mx1{};
     Matrix<4, 3> mx2{};
     Matrix<4, 3> mx3{};
+
     mx1.fill(5);
     mx2.fill(2);
     mx3.fill(1);
 
-    Vector<4> v1{};
-    Vector<4> v2{};
-    v1[0] = 2; v1[1] = 2; v1[2] = 1; v1[3] = 1;
-    v2[0] = 2; v2[1] = 2; v2[2] = 1; v2[3] = 2;
+    Vector4D v1(1,1,1, 0);
+    Vector4D v2(0,-1,0, 2);
 
-    mx1 = mx1 * 10;
-    mx1(3, 0) = 0;
-    mx1 = mx1 - mx1;
-    v1 = mx1[0];
-    std::cout << mx1 << std::endl;
-    std::cout << v1 << std::endl;
+    //Operations:
 
-    /*
-    v1 = v1 - v2;
-    float s = Magnitude(v1);
+    Matrix4D mx4(v1,v1, v1, v1);
+    v2 = mx4 * v2;
 
-    std::cout << v1 << std::endl;
-    std::cout << s << std::endl;
-     */
+    //Output:
+    std::cout << mx4(0,0) << std::endl;
+    std::cout << v2.x << ", " << v2.y << ", " << v2.z << ", " << v2.w << std::endl;
 
     return 0;
 }
