@@ -242,6 +242,8 @@ Matrix3D operator-(const Matrix3D& A, const Matrix3D& B);
 
 float Determinant (const Matrix3D& M);
 
+
+
 ///-----------------------------------------------------------------------------------
 ///4D:
 class Matrix4D {
@@ -296,4 +298,6 @@ Matrix4D operator+(const Matrix4D& A, const Matrix4D& B);
 Matrix4D operator-(const Matrix4D& A, const Matrix4D& B);
 
 float Determinant (const Matrix4D& M);
+
+
 #endif //LEGITARSASAG_MATRIX_H
