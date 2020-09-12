@@ -142,7 +142,56 @@ inline std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> 
     return stream;
 }
 
+class Matrix2D {
+    float n[2][2];
+public:
+    Matrix2D() = default;
 
+    Matrix2D(float n00, float n01,
+             float n10, float n11) {
+        n[0][0] = n00; n[0][1] = n10;
+        n[1][0] = n01; n[1][1] = n11;
+    }
+
+    Matrix2D(const Vector2D& a, const Vector2D& b) {
+        n[0][0] = a.x; n[0][1] = a.y;
+        n[1][0] = b.x; n[1][1] = b.y;
+    }
+
+    float& operator() (int r, int c) { //indexeles (sor, oszlop)
+        return (n[c][r]);
+    }
+
+    const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
+        return (n[c][r]);
+    }
+
+    Vector2D& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
+        return (*reinterpret_cast<Vector2D*>(n[c]));
+    }
+
+    const Vector2D& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
+        return (*reinterpret_cast<const Vector2D*>(n[c]));
+    }
+
+};
+
+///Multiplication
+Matrix2D operator*(const Matrix2D& A, const Matrix2D& B); ///Last tested.
+Vector2D operator*(const Matrix2D& M, const Vector2D& v);
+Matrix2D operator*(float s, const Matrix2D& M);
+Matrix2D operator*(const Matrix2D& M, float s);
+
+Matrix2D Transpose(const Matrix2D& M);
+
+///Addition / Subtraction
+Matrix2D operator+(const Matrix2D& A, const Matrix2D& B);
+Matrix2D operator-(const Matrix2D& A, const Matrix2D& B);
+
+float Determinant (const Matrix2D& M);
+
+
+///-------------------------------------------------------------------
 class Matrix3D {
     float n[3][3]; //column-major - Oszlopfolytonos tarolas.
 public:
@@ -180,7 +229,7 @@ public:
 };
 
 ///Multiplication
-Matrix3D operator*(const Matrix3D& A, const Matrix3D& B);
+Matrix3D operator*(const Matrix3D& A, const Matrix3D& B); ///Last tested.
 Vector3D operator*(const Matrix3D& M, const Vector3D& v);
 Matrix3D operator*(float s, const Matrix3D& M);
 Matrix3D operator*(const Matrix3D& M, float s);
@@ -191,6 +240,9 @@ Matrix3D Transpose(const Matrix3D& M);
 Matrix3D operator+(const Matrix3D& A, const Matrix3D& B);
 Matrix3D operator-(const Matrix3D& A, const Matrix3D& B);
 
+float Determinant (const Matrix3D& M);
+
+///-----------------------------------------------------------------------------------
 ///4D:
 class Matrix4D {
     float n[4][4]; //column-major - Oszlopfolytonos tarolas.
@@ -243,4 +295,5 @@ Matrix4D Transpose(const Matrix4D& M);
 Matrix4D operator+(const Matrix4D& A, const Matrix4D& B);
 Matrix4D operator-(const Matrix4D& A, const Matrix4D& B);
 
+float Determinant (const Matrix4D& M);
 #endif //LEGITARSASAG_MATRIX_H

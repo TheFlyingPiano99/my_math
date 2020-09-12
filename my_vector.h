@@ -295,7 +295,9 @@ inline float Dot (const Vector3D& a, const Vector3D& b) {
 }
 
 inline Vector3D Cross (const Vector3D& a, const Vector3D& b) {
-    return (Vector3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x));
+    return (Vector3D(a.y*b.z - a.z*b.y,
+                     a.z*b.x - a.x*b.z,
+                     a.x*b.y - a.y*b.x));
 }
 
 inline Vector3D operator/ (const Vector3D& v, float s) {
@@ -334,6 +336,14 @@ float Sin (Vector3D v1, Vector3D v2);
 
 float Cos (Vector3D v1, Vector3D v2);
 
+///Project/Reject:
+inline Vector3D Project (const Vector3D& a, const Vector3D& b) {
+    return Vector3D(b * (Dot(a, b) / Dot(b, b)));
+}
+
+inline Vector3D Reject (const Vector3D& a, const Vector3D& b) {
+    return Vector3D(a - b * (Dot(a, b) / Dot(b, b)));
+}
 
 ///------------------------------------------------
 struct Vector4D {
