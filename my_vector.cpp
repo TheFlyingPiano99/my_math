@@ -3,6 +3,65 @@
 //
 #include "my_vector.h"
 
+Vector &Vector::operator*=(float s) {
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] *= s;
+    }
+    return (*this);
+}
+
+
+Vector &Vector::operator/=(float s) {
+    s = 1.0F / s;
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] *= s;
+    }
+    return (*this);
+}
+
+
+Vector &Vector::operator+=(const Vector &v) {
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] += v[i];
+    }
+    return (*this);
+}
+
+
+Vector &Vector::operator-=(const Vector &v) {
+    for (unsigned int i = 0; i < dimension; i++) {
+        n[i] -= v[i];
+    }
+    return (*this);
+}
+
+Vector &Vector::operator=(const Vector &v) {
+    if (this != &v ) {
+        if (this->dimension == v.dimension) {
+            for (int i = 0; i < dimension; i++) {
+                this->n[i] = v[i];
+            }
+        } else {
+            throw std::runtime_error("asignment of wrong dimension.");
+        }
+    }
+    return *this;
+}
+
+std::ostream& operator<< (std::ostream& stream, Vector& v) {
+    stream <<"(";
+    for (int i = 0; i < v.dimension; ++i) {
+        stream << v[i];
+        if (i != v.dimension-1) {
+            stream << ", ";
+        }
+    }
+    stream <<")";
+    return stream;
+}
+
+
+///-------------------------------------------------------------------
 
 Vector2D& Vector2D::operator*=(float s) {
     x *= s;

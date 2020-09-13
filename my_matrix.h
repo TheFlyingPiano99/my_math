@@ -10,46 +10,72 @@
 
 #include "my_vector.h"
 
+#include <unordered_map>
+
+
 /**
- * Float matrix, with column-major order (template size)
- * @tparam r - number of row
- * @tparam c - number of columns
+ * Float matrix, with column-major order
+ * @param r - number of rows
+ * @param c - number of columns
  */
-template<unsigned int row, unsigned int column>
 class Matrix {
-    float n[column][row];
+    std::vector<std::vector<float>*> n;
 public:
-    Matrix<row, column>() = default;
+    const int column;
+    const int row;
+
+    explicit Matrix(int r,int c): column(c), row(r) {
+        n.resize(c);
+        for (auto &col : n) {
+            col = new std::vector<float>;
+            col->resize(r);
+        }
+    }
+
+    ~Matrix() {
+        for (auto &r : n) {
+            delete r;
+        }
+    }
 
     float& operator() (int r, int c) { //indexeles (sor, oszlop)
-        return (n[c][r]);
+        return (n[c]->operator[](r));
     }
 
     const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
-        return (n[c][r]);
+        return (n[c]->operator[](r));
+    }
+    Vector operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
+        Vector v(row);
+        v.setPointer(reinterpret_cast<float *>(n[c]));
+        return v;
     }
 
-    Vector<row>& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
-        return (*reinterpret_cast<Vector<row>*>(n[c]));
-    }
-
-    const Vector<row>& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
-        return (*reinterpret_cast<Vector<row>*>(n[c]));
+    const Vector operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
+        Vector v(row);
+        v.setPointer(reinterpret_cast<float *>(n[c]));
+        return v;
     }
 
     void fill(float val) {
         for (unsigned int c = 0; c < column; c++) {
             for (unsigned int r = 0; r < row; r++) {
-                n[c][r] = val;
+                (*n[c])[r] = val;
             }
         }
     }
+
+    Matrix& operator= (const Matrix& M);
+
 };
 
 ///Multiplication
-template<unsigned int row1, unsigned int column1row2, unsigned int column2>
-inline Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const Matrix<column1row2, column2> &B) {
-    Matrix<row1, column2> retM;
+inline Matrix operator*(const Matrix &A, const Matrix &B) {
+    int row1 = A.row;
+    int column1row2 = A.column;
+    int column2 = B.column;
+
+    Matrix retM(row1, column2);
     for (unsigned int c = 0; c < column2; c++) {
         for (unsigned int r = 0; r < row1; r++) {
             float n = 0;
@@ -62,12 +88,11 @@ inline Matrix<row1, column2> operator*(const Matrix<row1, column1row2> &A, const
     return retM;
 }
 
-template<unsigned int row, unsigned int column>
-inline Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> &v) {
-    Vector<row> retV;
-    for (unsigned int r = 0; r < row; r++) {
+inline Vector operator*(const Matrix &M, const Vector &v) {
+    Vector retV(M.row);
+    for (unsigned int r = 0; r < M.row; r++) {
         float n = 0;
-        for (unsigned int k = 0; k < column; k++) {
+        for (unsigned int k = 0; k < M.column; k++) {
             n += M(r, k) * v[k];
         }
         retV[r] = n;
@@ -75,32 +100,31 @@ inline Vector<row> operator*(const Matrix<row, column> &M, const Vector<column> 
     return retV;
 }
 
-template<unsigned int row, unsigned int column>
-inline Matrix<row, column> operator*(float s, const Matrix<row, column> &M) {
-    Matrix<row, column> retM;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
-            retM(r, c) = M(r, c) * s;
-        }
-    }
-    return retM;
-}
-template<unsigned int row, unsigned int column>
-inline Matrix<row, column> operator*(const Matrix<row, column> &M, float s) {
-    Matrix<row, column> retM;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
+
+inline Matrix operator*(float s, const Matrix &M) {
+    Matrix retM(M.row, M.column);
+    for (unsigned int c = 0; c < M.column; c++) {
+        for (unsigned int r = 0; r < M.row; r++) {
             retM(r, c) = M(r, c) * s;
         }
     }
     return retM;
 }
 
-template<unsigned int row, unsigned int column>
-inline Matrix<column, row> Transpose(const Matrix<row, column>& M) {
-    Matrix<column, row> retM;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < row; r++) {
+inline Matrix operator*(const Matrix &M, float s) {
+    Matrix retM(M.row, M.column);
+    for (unsigned int c = 0; c < M.column; c++) {
+        for (unsigned int r = 0; r < M.row; r++) {
+            retM(r, c) = M(r, c) * s;
+        }
+    }
+    return retM;
+}
+
+inline Matrix Transpose(const Matrix& M) {
+    Matrix retM(M.column, M.row);
+    for (unsigned int c = 0; c < M.column; c++) {
+        for (unsigned int r = 0; r < M.row; r++) {
             retM(c, r) = M(r, c);
         }
     }
@@ -108,33 +132,30 @@ inline Matrix<column, row> Transpose(const Matrix<row, column>& M) {
 }
 
 ///Addition / Subtraction
-template<unsigned int row, unsigned int column>
-inline Matrix<row, column> operator+(const Matrix<row, column>& A, const Matrix<row, column>& B) {
-    Matrix<row, column> retM;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < column; r++) {
+inline Matrix operator+(const Matrix& A, const Matrix& B) {
+    Matrix retM(A.row, A.column);
+    for (unsigned int c = 0; c < A.column; c++) {
+        for (unsigned int r = 0; r < A.row; r++) {
             retM(r, c) = A(r, c) + B(r, c);
         }
     }
     return retM;
 }
 
-template<unsigned int row, unsigned int column>
-inline Matrix<row, column> operator-(const Matrix<row, column>& A, const Matrix<row, column>& B) {
-    Matrix<row, column> retM;
-    for (unsigned int c = 0; c < column; c++) {
-        for (unsigned int r = 0; r < column; r++) {
+inline Matrix operator-(const Matrix& A, const Matrix& B) {
+    Matrix retM(A.row, A.column);
+    for (unsigned int c = 0; c < A.column; c++) {
+        for (unsigned int r = 0; r < A.row; r++) {
             retM(r, c) = A(r, c) - B(r, c);
         }
     }
     return retM;
 }
 
-template<unsigned int row, unsigned int column>
-inline std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> &M) {
-    for (unsigned int r = 0; r < row; r++) {
+inline std::ostream &operator<<(std::ostream &stream, const Matrix &M) {
+    for (unsigned int r = 0; r < M.row; r++) {
         stream << "|";
-        for (unsigned int c = 0; c < column; c++) {
+        for (unsigned int c = 0; c < M.column; c++) {
             stream << M(r, c) << "|";
         }
         stream << "\n";
@@ -142,6 +163,7 @@ inline std::ostream &operator<<(std::ostream &stream, const Matrix<row, column> 
     return stream;
 }
 
+///----------------------------------------------------------------------
 class Matrix2D {
     float n[2][2];
 public:

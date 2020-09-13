@@ -3,7 +3,7 @@
 //
 
 #include "Analise.h"
-
+/*
 template<unsigned int r, unsigned int c>
 void Analiser::create_discrete_fourier_transform_mx (const std::complex<float>& omega, Matrix<r, c>& ebbe) {
     size_t N = ebbe.getRowN();
@@ -23,7 +23,6 @@ void Analiser::discrete_fourier_transform(Matrix<r, c>& f, Matrix<r, c>& f_trans
 
     Matrix<r, c> transf_mx(N, N);
     create_discrete_fourier_transform_mx(omega, transf_mx);
-/*
     f_transform = f * transf_mx;
 
 
@@ -37,7 +36,6 @@ void Analiser::discrete_fourier_transform(Matrix<r, c>& f, Matrix<r, c>& f_trans
     }
 
     return sqrt(sum_re * sum_re  +  sum_im   * sum_im);
-*/
 }
 
 void Analiser::discrete_fourier_transform_sajat(std::vector<float>& f, std::vector<float>& f_transform) {
@@ -58,4 +56,4 @@ void Analiser::discrete_fourier_transform_sajat(std::vector<float>& f, std::vect
     }
 
 }
-
+*/

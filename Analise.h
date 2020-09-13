@@ -12,7 +12,7 @@ class vector;
 
 class Functions;
 
-class Analiser {
+/*class Analiser {
 
     template<unsigned int r, unsigned int c>
     void create_discrete_fourier_transform_mx (const std::complex<float>& omega, Matrix<r, c>& ebbe);
@@ -27,5 +27,5 @@ public:
     void discrete_fourier_transform_sajat(std::vector<float>& f, std::vector<float>& f_transform);
 
 };
-
+*/
 #endif //LEGITARSASAG_ANALISE_H

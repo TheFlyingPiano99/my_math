@@ -218,10 +218,18 @@ float Determinant(const Matrix4D &m) {
 }
 
 
-
-
-
-
-
-
-
+Matrix &Matrix::operator=(const Matrix &M) {
+    if (this != &M) {
+        if (this->column == M.column and this->row == M.row) {
+            for (int c = 0; c < column; c++) {
+                for (int r = 0; r < row; r++) {
+                    this->n[c]->operator[](r) = M(r, c);
+                }
+            }
+        }
+        else {
+            throw std::runtime_error("Asignment of wrong dimension.");
+        }
+    }
+    return *this;
+}

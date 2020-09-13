@@ -5,11 +5,26 @@
 #include <cmath>
 #include <iostream>
 
-template <unsigned int dimension>
 struct Vector {
-    float n[dimension];
+private:
+    float* n;
 public:
-    Vector<dimension>() = default;
+    const int dimension;
+
+    Vector(int d): dimension(d) {
+        n = new float[dimension];
+    }
+
+    Vector(const Vector& v) : dimension(v.dimension) {
+        n = new float[dimension];
+        for (int i = 0; i < dimension; i++) {
+            n[i] = v[i];
+        }
+    }
+
+    ~Vector() {
+        delete [] n;
+    }
 
     float& operator[] (int i) {
         return (n[i]);
@@ -19,148 +34,113 @@ public:
         return (n[i]);
     }
 
-    Vector<dimension>& operator*=(float s);
-    Vector<dimension>& operator/=(float s);
+    void setPointer (float* p) {
+        if (n != nullptr) {
+            delete [] n;
+        }
+        n = p;
+    }
 
-    Vector<dimension>& operator+=(const Vector<dimension>& v);
-    Vector<dimension>& operator-=(const Vector<dimension>& v);
+    Vector& operator*=(float s);
+    Vector& operator/=(float s);
+
+    Vector& operator+=(const Vector& v);
+    Vector& operator-=(const Vector& v);
+    Vector& operator=(const Vector& v);
 };
 
-template<unsigned int dimension>
-Vector<dimension> &Vector<dimension>::operator*=(float s) {
-    for (unsigned int i = 0; i < dimension; i++) {
-        n[i] *= s;
-    }
-    return (*this);
-}
-
-template<unsigned int dimension>
-Vector<dimension> &Vector<dimension>::operator/=(float s) {
-    s = 1.0F / s;
-    for (unsigned int i = 0; i < dimension; i++) {
-        n[i] *= s;
-    }
-    return (*this);
-}
-
-template<unsigned int dimension>
-Vector<dimension> &Vector<dimension>::operator+=(const Vector<dimension> &v) {
-    for (unsigned int i = 0; i < dimension; i++) {
-        n[i] += v[i];
-    }
-    return (*this);
-}
-
-template<unsigned int dimension>
-Vector<dimension> &Vector<dimension>::operator-=(const Vector<dimension> &v) {
-    for (unsigned int i = 0; i < dimension; i++) {
-        n[i] -= v[i];
-    }
-    return (*this);
-}
 
 ///Multiplication
 
-template<unsigned int dimension>
-inline Vector<dimension> operator* (const Vector<dimension>& v, float s) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator* (const Vector& v, float s) {
+    Vector retV(v.dimension);
+    for (unsigned int i = 0; i < v.dimension; i++) {
         retV[i] = v[i] * s;
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> operator* (float s, const Vector<dimension>& v) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator* (float s, const Vector& v) {
+    Vector retV(v.dimension);
+    for (unsigned int i = 0; i < v.dimension; i++) {
         retV[i] = v[i] * s;
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline float Dot (const Vector<dimension>& a, const Vector<dimension>& b) {
+
+inline float Dot (const Vector& a, const Vector& b) {
     float sum = 0;
-    for (unsigned int i = 0; i < dimension; i++) {
+    for (unsigned int i = 0; i < a.dimension; i++) {
         sum += a[i] * b[i];
     }
     return sum;
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> operator/ (const Vector<dimension>& v, float s) {
+
+inline Vector operator/ (const Vector& v, float s) {
     s = 1.0F / s;
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+    Vector retV(v.dimension);
+    for (unsigned int i = 0; i < v.dimension; i++) {
         retV[i] = v[i] * s;
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> operator/ (const Vector<dimension>& a, const Vector<dimension>& b) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator/ (const Vector& a, const Vector& b) {
+    Vector retV(a.dimension);
+    for (unsigned int i = 0; i < a.dimension; i++) {
         retV[i] = a[i] * (1.0F/b[i]);
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> operator-(const Vector<dimension>& v) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator-(const Vector& v) {
+    Vector retV(v.dimension);
+    for (unsigned int i = 0; i < v.dimension; i++) {
         retV[i] = -v[i];
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline float Magnitude (const Vector<dimension>& v) {
+
+inline float Magnitude (const Vector& v) {
     float sum = 0;
-    for (unsigned int i = 0; i < dimension; i++) {
+    for (unsigned int i = 0; i < v.dimension; i++) {
         sum += v[i]*v[i];
     }
     return sqrtf(sum);
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> Normalize (const Vector<dimension>& v) {
+
+inline Vector Normalize (const Vector& v) {
     return  (v / Magnitude(v));
 }
 
 ///Addition / Subtraction
-template<unsigned int dimension>
-inline Vector<dimension> operator+ (const Vector<dimension>& a, const Vector<dimension>& b) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator+ (const Vector& a, const Vector& b) {
+    Vector retV(a.dimension);
+    for (unsigned int i = 0; i < a.dimension; i++) {
         retV[i] = a[i] + b[i];
     }
     return retV;
 }
 
-template<unsigned int dimension>
-inline Vector<dimension> operator- (const Vector<dimension>& a, const Vector<dimension>& b) {
-    Vector<dimension> retV;
-    for (unsigned int i = 0; i < dimension; i++) {
+
+inline Vector operator- (const Vector& a, const Vector& b) {
+    Vector retV(a.dimension);
+    for (unsigned int i = 0; i < a.dimension; i++) {
         retV[i] = a[i] - b[i];
     }
     return retV;
 }
 
-template<unsigned int dimension>
-std::ostream& operator<< (std::ostream& stream, Vector<dimension>& v) {
-    stream <<"(";
-    for (int i = 0; i < dimension; ++i) {
-        stream << v[i];
-        if (i != dimension-1) {
-            stream << ", ";
-        }
-    }
-    stream <<")";
-    return stream;
-}
+
 
 ///-------------------------------------------------------------------------------
 
