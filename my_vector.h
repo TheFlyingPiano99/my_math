@@ -15,13 +15,6 @@ public:
         n = new float[dimension];
     }
 
-    Vector(const Vector& v) : dimension(v.dimension) {
-        n = new float[dimension];
-        for (int i = 0; i < dimension; i++) {
-            n[i] = v[i];
-        }
-    }
-
     ~Vector() {
         delete [] n;
     }
@@ -34,11 +27,10 @@ public:
         return (n[i]);
     }
 
-    void setPointer (float* p) {
-        if (n != nullptr) {
-            delete [] n;
+    void fill (float val) {
+        for (int i = 0; i < dimension; i++) {
+            n[i] = val;
         }
-        n = p;
     }
 
     Vector& operator*=(float s);

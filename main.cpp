@@ -14,7 +14,14 @@ int main() {
 
     Matrix* adjM;
     adjM = reinterpret_cast<Matrix*>(g1.BFS(0, Graph::ReturnType::incidenceM));
+    Vector v1(adjM->row);
+    Vector v2(adjM->column);
+    v2.fill(0);
+
+    v1 = *adjM * v2;
+    
     std::cout << *adjM;
     delete adjM;
+
     return 0;
 }

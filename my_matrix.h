@@ -19,48 +19,41 @@
  * @param c - number of columns
  */
 class Matrix {
-    std::vector<std::vector<float>*> n;
+    float* n;
 public:
-    const int column;
-    const int row;
+    int column;
+    int row;
 
     explicit Matrix(int r,int c): column(c), row(r) {
-        n.resize(c);
-        for (auto &col : n) {
-            col = new std::vector<float>;
-            col->resize(r);
+        n = new float[row * column];
+        if (n == nullptr) {
+            throw std::runtime_error("Not inicialised.");
         }
     }
 
     ~Matrix() {
-        for (auto &r : n) {
-            delete r;
-        }
+        delete [] n;
     }
 
     float& operator() (int r, int c) { //indexeles (sor, oszlop)
-        return (n[c]->operator[](r));
+        return (n[c * row + r]);
     }
 
     const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
-        return (n[c]->operator[](r));
+        return (n[c * row + r]);
     }
-    Vector operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
-        Vector v(row);
-        v.setPointer(reinterpret_cast<float *>(n[c]));
-        return v;
+/*    Vector& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
+        return *reinterpret_cast<Vector*>(c * row);
     }
 
-    const Vector operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
-        Vector v(row);
-        v.setPointer(reinterpret_cast<float *>(n[c]));
-        return v;
+    const Vector& operator[] (int c) const { //indexeles oszlopvektorral visszaterve (sor)
+        return *reinterpret_cast<Vector*>(c * row);
     }
-
+*/
     void fill(float val) {
         for (unsigned int c = 0; c < column; c++) {
             for (unsigned int r = 0; r < row; r++) {
-                (*n[c])[r] = val;
+                (*this)(r,c) = val;
             }
         }
     }

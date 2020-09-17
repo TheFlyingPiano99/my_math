@@ -223,7 +223,7 @@ Matrix &Matrix::operator=(const Matrix &M) {
         if (this->column == M.column and this->row == M.row) {
             for (int c = 0; c < column; c++) {
                 for (int r = 0; r < row; r++) {
-                    this->n[c]->operator[](r) = M(r, c);
+                    (*this)(r,c) = M(r, c);
                 }
             }
         }

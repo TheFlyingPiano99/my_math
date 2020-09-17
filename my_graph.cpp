@@ -179,9 +179,9 @@ Matrix *Graph::BFS_ReturnAdjacencyM(int s) {
 }
 
 Matrix *Graph::BFS_ReturnIncidenceM(int s) {
-    int traversed[/*iterall*/v];
-    int distance[/*vertex*/v];
-    int previous[/*vertex*/v];
+    int traversed[/*iterall*/ v];
+    int distance[/*vertex*/ v];
+    int previous[/*vertex*/ v];
 
     ///Init:
     int numOfTraversed = 0;
@@ -244,18 +244,30 @@ Matrix *Graph::BFS_ReturnIncidenceM(int s) {
 ///-----------------------------------------------------------------------------------
 
 void* Graph::BFS(int s, ReturnType retT) {
+    void* retP;
     switch (retT) {
-        case Graph::ReturnType::breadth_first_tree:
-            return BFS_ReturnBreadthFirstTree(s);
-        case adjacencyM:
-            return BFS_ReturnAdjacencyM(s);
-        case incidenceM:
-            return BFS_ReturnIncidenceM(s);
-        case distanceM:
-            return BFS_ReturnDistanceM(s);
-        default:
-            return nullptr;
+        case Graph::ReturnType::breadth_first_tree: {
+            retP = BFS_ReturnBreadthFirstTree(s);
+            break;
+        }
+        case adjacencyM: {
+            retP = BFS_ReturnAdjacencyM(s);
+            break;
+        }
+        case incidenceM: {
+            retP = BFS_ReturnIncidenceM(s);
+            break;
+        }
+        case distanceM: {
+            retP = BFS_ReturnDistanceM(s);
+            break;
+        }
+        default: {
+            retP = nullptr;
+            break;
+        }
     }
+    return retP;
 }
 
 
