@@ -4,7 +4,7 @@
 
 #include "my_graph.h"
 
-Matrix* Graph::BFS_ReturnDistanceM (int s) {
+Matrix* Graph::BFS_ReturnDistanceM (const int s) {
     int traversed[/*iterall*/v];
     int distance[/*vertex*/v];
     int previous[/*vertex*/v];
@@ -61,7 +61,7 @@ Matrix* Graph::BFS_ReturnDistanceM (int s) {
     return mx;
 }
 
-Graph *Graph::BFS_ReturnBreadthFirstTree(int s) {
+Graph *Graph::BFS_ReturnBreadthFirstTree(const int s) {
     int traversed[/*iterall*/v];
     int distance[/*vertex*/v];
     int previous[/*vertex*/v];
@@ -119,7 +119,7 @@ Graph *Graph::BFS_ReturnBreadthFirstTree(int s) {
 
 }
 
-Matrix *Graph::BFS_ReturnAdjacencyM(int s) {
+Matrix *Graph::BFS_ReturnAdjacencyM(const int s) {
     int traversed[/*iterall*/v];
     int distance[/*vertex*/v];
     int previous[/*vertex*/v];
@@ -178,7 +178,7 @@ Matrix *Graph::BFS_ReturnAdjacencyM(int s) {
     return mx;
 }
 
-Matrix *Graph::BFS_ReturnIncidenceM(int s) {
+Matrix *Graph::BFS_ReturnIncidenceM(const int s) {
     int traversed[/*iterall*/ v];
     int distance[/*vertex*/ v];
     int previous[/*vertex*/ v];

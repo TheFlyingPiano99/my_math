@@ -80,7 +80,7 @@ public:
         distanceM
     };
 
-    void* BFS(int s, ReturnType retT);
+    void* BFS(const int s, ReturnType retT);
 
     Matrix AdjacencyMatrix() {
         Matrix retM(v, v);
@@ -95,10 +95,10 @@ public:
 
 
 protected:
-    Graph* BFS_ReturnBreadthFirstTree (int s);
-    Matrix* BFS_ReturnAdjacencyM (int s);
-    Matrix* BFS_ReturnIncidenceM (int s);
-    Matrix* BFS_ReturnDistanceM (int s);
+    Graph* BFS_ReturnBreadthFirstTree (const int s);
+    Matrix* BFS_ReturnAdjacencyM (const int s);
+    Matrix* BFS_ReturnIncidenceM (const int s);
+    Matrix* BFS_ReturnDistanceM (const int s);
 };
 
 
