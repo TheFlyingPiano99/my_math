@@ -6,21 +6,26 @@
 int main() {
     std::cout << "Test" << std::endl;
 
-    Graph g1(10);
-
-    g1.addEdge(0,1);
-    g1.addEdge(1,2);
-    g1.addEdge(2,3);
+    Graph g1(4);
+    g1.addUndirectedEdge('a','b');
+    g1.addUndirectedEdge('b','c');
+    g1.addUndirectedEdge('c','d');
+    g1.addUndirectedEdge('a','c');
+    g1.addUndirectedEdge('d','b');
 
     Matrix* adjM;
-    adjM = reinterpret_cast<Matrix*>(g1.BFS(0, Graph::ReturnType::incidenceM));
-    Vector v1(adjM->row);
-    Vector v2(adjM->column);
-    v2.fill(0);
+    adjM = new Matrix (g1.AdjacencyMatrix());
 
-    v1 = *adjM * v2;
-    
-    std::cout << *adjM;
+    std::cout << *adjM << std::endl;
+
+    //2
+    *adjM = *adjM * *adjM;
+    std::cout << *adjM << std::endl;
+
+    //3
+    *adjM = *adjM * *adjM;
+    std::cout << *adjM << std::endl;
+
     delete adjM;
 
     return 0;
