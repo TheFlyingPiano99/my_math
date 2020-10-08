@@ -24,10 +24,29 @@ public:
     int column;
     int row;
 
+    /**
+     * Constructor
+     * @param r - number of rows
+     * @param c - number of columns
+     * @return
+     */
     explicit Matrix(int r,int c): column(c), row(r) {
         n = new float[row * column];
         if (n == nullptr) {
-            throw std::runtime_error("Not inicialised.");
+            throw std::runtime_error("Initialisation failed!");
+        }
+    }
+
+
+    Matrix(const Matrix& M): column(M.column), row(M.row) {
+        n = new float[row * column];
+        if (n == nullptr) {
+            throw std::runtime_error("Initialisation failed!");
+        }
+        for (int c = 0; c < M.column; c++) {
+            for  (int r = 0; r < M.row; r++) {
+                n[c * row + r] = M(r, c);
+            }
         }
     }
 
@@ -35,13 +54,26 @@ public:
         delete [] n;
     }
 
+    /**
+     * Indexing
+     * @param r - row index
+     * @param c - columns index
+     * @return
+     */
     float& operator() (int r, int c) { //indexeles (sor, oszlop)
         return (n[c * row + r]);
     }
 
+    /**
+     * Const Indexing
+     * @param r - row index
+     * @param c - columns index
+     * @return
+     */
     const float& operator() (int r, int c) const { //indexeles (sor, oszlop)
         return (n[c * row + r]);
     }
+
 /*    Vector& operator[] (int c) { //indexeles oszlopvektorral visszaterve (sor)
         return *reinterpret_cast<Vector*>(c * row);
     }
@@ -50,6 +82,10 @@ public:
         return *reinterpret_cast<Vector*>(c * row);
     }
 */
+    /**
+     * Fills up matrix with given parameter
+     * @param val - to fill with
+     */
     void fill(float val) {
         for (unsigned int c = 0; c < column; c++) {
             for (unsigned int r = 0; r < row; r++) {
@@ -59,6 +95,8 @@ public:
     }
 
     Matrix& operator= (const Matrix& M);
+
+    Matrix& copyWithResize (const Matrix& M);
 
 };
 
@@ -144,6 +182,10 @@ inline Matrix operator-(const Matrix& A, const Matrix& B) {
     }
     return retM;
 }
+
+///Other
+float Determinant (const Matrix& M);
+
 
 inline std::ostream &operator<<(std::ostream &stream, const Matrix &M) {
     for (unsigned int r = 0; r < M.row; r++) {

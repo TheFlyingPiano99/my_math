@@ -217,18 +217,37 @@ float Determinant(const Matrix4D &m) {
             );
 }
 
+#include "my_gauss.h"
+
+float Determinant(const Matrix &M) {
+    Matrix tempM(M);
+    Gauss::Eliminate(tempM);
+    return 0;
+}
+
 
 Matrix &Matrix::operator=(const Matrix &M) {
     if (this != &M) {
-        if (this->column == M.column and this->row == M.row) {
-            for (int c = 0; c < column; c++) {
-                for (int r = 0; r < row; r++) {
-                    (*this)(r,c) = M(r, c);
-                }
+        for (int c = 0; c < column; c++) {
+            for (int r = 0; r < row; r++) {
+                (*this)(r,c) = M(r, c);
             }
         }
-        else {
-            throw std::runtime_error("Asignment of wrong dimension.");
+    }
+    return *this;
+}
+
+Matrix &Matrix::copyWithResize(const Matrix &M) {
+    if (this != &M) {
+        row = M.row;
+        column = M.column;
+        delete [] n;
+        n = new float[row * column];
+
+        for (int c = 0; c < column; c++) {
+            for (int r = 0; r < row; r++) {
+                (*this)(r,c) = M(r, c);
+            }
         }
     }
     return *this;
