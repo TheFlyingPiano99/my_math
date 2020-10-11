@@ -21,8 +21,8 @@ Vector Gauss::Eliminate(Matrix &M) {
             int rightSideRow = M.row-1;     //The right side of the equation.
             for (int c = M.column-1; c > 0; c--) {    //Reverse iteration on columns
                 for (int ci = c-1; ci >= 0; ci--) {
-                        M(r, ci) = 0;
                         M(rightSideRow, ci) -= M(rightSideRow, c) * M(r, ci);
+                        M(r, ci) = 0;
                 }
                 r--;
             }

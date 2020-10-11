@@ -82,9 +82,11 @@ int main() {
 */
     Matrix M(10, 9);
     M.fill(10);
+
     M(4,5) = 2;
     M(4,4) = 2;
     M(4,8) = 2;
+
     std::cout << "The matrix:" << std::endl;
     std::cout << M << std::endl;
 
