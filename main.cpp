@@ -80,12 +80,15 @@ int main() {
     }
     std::cout << "Sum = " << sum * 1.0 << std::endl;
 */
-    Matrix M(10, 9);
-    M.fill(10);
+    Matrix M(3, 2);
 
-    M(4,5) = 2;
-    M(4,4) = 2;
-    M(4,8) = 2;
+    M(0,0) = 4;
+    M(1,0) = 2;
+    M(2,0) = 3;
+
+    M(0,1) = 6;
+    M(1,1) = 7;
+    M(2,1) = 2;
 
     std::cout << "The matrix:" << std::endl;
     std::cout << M << std::endl;

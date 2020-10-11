@@ -59,8 +59,9 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
             if (c < M.column - 1) {
                 //Add the -M(r, i) * M[c] column to all "M[i]" columns:
                 for (int i = c+1; i < M.column; i++) {
+                    int fact = M(r, i);
                     for (int j = 0; j < M.row; j++) {
-                        M(j, i) += -M(r, i) * M(j, c);
+                        M(j, i) -= fact * M(j, c);
                     }
                 }
             }
