@@ -11,47 +11,29 @@ Vector Gauss::Eliminate(Matrix &M) {
     switch (flag) {
         case noSolutin: {
             throw NoSolution();
-            break;
         }
         case infiniteSoultions: {
             throw InfiniteSolutions();
-            break;
         }
         case cleanSolution: {
 //Second fase of Gauss eliminaton after reducton:----------------------------
             int r = M.row-2;
+            int rightSideRow = M.row-1;     //The right side of the equation.
             for (int c = M.column-1; c > 0; c--) {    //Reverse iteration on columns
                 for (int ci = c-1; ci >= 0; ci--) {
-//                        M(r, ci) -= M(r, c) * M(, ci);
-//                        M(r, ci) -= M(r, c) * M(, ci);
+                        M(r, ci) = 0;
+                        M(rightSideRow, ci) -= M(rightSideRow, c) * M(r, ci);
                 }
-
+                r--;
             }
+            Vector ret(M.column);
+            for (int c = 0; c < M.column; c++) {
+                ret[c] = M(rightSideRow, c);
+            }
+            return ret;
 //---------------------------------------------------------------------------
-            break;
         }
     }
-/*
-    // if matrix is singular
-    if (singular_flag != -1) {
-        //Singular Matrix.
-
-        // if the RHS of equation corresponding to
-        //   zero row  is 0, * system has infinitely
-        //   many solutions, else inconsistent
-        if (M[singular_flag][M])
-            printf("Inconsistent System.");
-        else
-            printf("May have infinitely many "
-                   "solutions.");
-
-        return Vector;
-    }
-
-    // get solution to system and print it using
-    //   backward substitution
-    backSub(M);
-    */
 }
 
 
@@ -82,7 +64,7 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
                     }
                 }
             }
-            if ((r == M.row - 1) || (c == M.column - 1)) {  //Crossed matrix
+            if ((r == M.row - 2) || (c == M.column - 1)) {  //Crossed matrix
                 break;
             }
             else {                 //Proceed diagonally
@@ -114,11 +96,16 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
         }
     }
 
+    if (M.column < M.row - 1) {
+        return SingularityFlag::infiniteSoultions;
+    }
+
+
     //Final steps of Reduce:
     if (c < M.column-1) {
         bool zeroColumn = false;
         std::vector<int> toRemoveIndexes;     //Only if shrink matrix section is not commented out.
-        for (int i = c+1; i < M.column; i++) {    //Iterate on columns
+        for (int i = c; i < M.column; i++) {    //Iterate on columns
             bool foundNotZeroInColumn = false;
             for (int j = 0; j < M.row; j++) {   //Iterate element in current column
                 if (0 != M(j, i)) {
@@ -136,25 +123,28 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
 
         //Shrink matrix by removing zero columns:-----------------------
         Matrix tempM(M.row, M.column - toRemoveIndexes.size());
-        //Fill up M with M-s data, except zero columns.
+        //Fill up M with M-s data, except zero columns. (Might reduce number of columns by number of zero columns.)
         int ct = 0; //Index of the temp matrix.
         for (int c = 0; c < M.column; c++) {
             if (toRemoveIndexes.end() == std::find(toRemoveIndexes.begin(), toRemoveIndexes.end(), c)) {
-                for (int r = 0; r < M.row; r++) {
-                    tempM(r, ct) = M(r, c);
+                for (int i = 0; i < M.row; i++) {
+                    tempM(i, ct) = M(i, c);
                 }
                 ct++;
             }
         }
         M.copyWithResize(tempM);
         //--------------------------------------------------------------
-    }
+        if (M.column < M.row - 1) {
+            return SingularityFlag::infiniteSoultions;
+        }
 
-    if (M.column < M.row - 1) {
-        return SingularityFlag::infiniteSoultions;
+        return SingularityFlag::cleanSolution;
     }
-
-    return SingularityFlag::cleanSolution;
+    else {
+        return SingularityFlag::cleanSolution;
+        //return SingularityFlag::noSolutin;
+    }
 }
 
 void Gauss::SwapColumn(Matrix &M, int col1, int col2) {

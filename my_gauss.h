@@ -40,6 +40,9 @@ public:
      * Gauss elimination for column major matrix.
      * @param M - (N+1)*N matrix The right side values should be in the last row.
      * Will be modified!!!
+     * @return Vector - The solution of the linear system. The 0. index value of the vector is the value of the
+     * 0. index variable.
+     * @throws GaussException - if the matrix has no solution or has infinite solutions.
      */
     static Vector Eliminate (Matrix& M);
 

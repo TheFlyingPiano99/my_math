@@ -80,28 +80,32 @@ int main() {
     }
     std::cout << "Sum = " << sum * 1.0 << std::endl;
 */
-    Matrix M(10, 10);
-    M.fill(1);
-    M(0,0) = 0;
-    M(0,1) = 0;
+    Matrix M(10, 9);
+    M.fill(10);
+    M(4,5) = 2;
+    M(4,4) = 2;
+    M(4,8) = 2;
+    std::cout << "The matrix:" << std::endl;
+    std::cout << M << std::endl;
 
-    M(1,0) = 0;
-    M(1,1) = 0;
+    Gauss::Reduce(M);
 
-    M(2,0) = 0;
-    M(2,1) = 0;
-    M(1, 8) = 0;
+    std::cout << "After Reduction:" << std::endl;
+    std::cout << M << std::endl;
 
-    std::cout << "Reduction:" << std::endl;
-
-
+    Vector sol(0);
     try {
-        Vector sol = Gauss::Eliminate(M);
+        sol = Gauss::Eliminate(M);
+
+        std::cout << "After Elimination:" << std::endl;
+        std::cout << M << std::endl;
     }
     catch (Gauss::GaussException& e) {
         std::cout << e.what() <<std::endl;
     }
-    std::cout << M << std::endl;
+
+    std::cout << "Solution vector:" << std::endl;
+    std::cout << sol << std::endl;
 
     return 0;
 }

@@ -37,12 +37,13 @@ Vector &Vector::operator-=(const Vector &v) {
 
 Vector &Vector::operator=(const Vector &v) {
     if (this != &v ) {
-        if (this->dimension == v.dimension) {
-            for (int i = 0; i < dimension; i++) {
-                this->n[i] = v[i];
-            }
-        } else {
-            throw std::runtime_error("asignment of wrong dimension.");
+        if (this->dimension != v.dimension) {
+            dimension = v.dimension;
+            delete [] n;
+            n = new float [dimension];
+        }
+        for (int i = 0; i < dimension; i++) {
+            this->n[i] = v[i];
         }
     }
     return *this;

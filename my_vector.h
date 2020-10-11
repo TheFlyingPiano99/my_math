@@ -9,7 +9,7 @@ struct Vector {
 private:
     float* n;
 public:
-    const int dimension;
+    int dimension;
 
     Vector(int d): dimension(d) {
         n = new float[dimension];
@@ -18,6 +18,14 @@ public:
     ~Vector() {
         delete [] n;
     }
+
+    Vector(const Vector& v): dimension(v.dimension) {
+        n = new float[dimension];
+        for (int i = 0; i < dimension; i++) {
+            n[i] = v[i];
+        }
+    }
+
 
     float& operator[] (int i) {
         return (n[i]);
@@ -132,6 +140,17 @@ inline Vector operator- (const Vector& a, const Vector& b) {
     return retV;
 }
 
+inline std::ostream &operator<<(std::ostream &stream, const Vector &v) {
+    stream << "(";
+    for (unsigned int e = 0; e < v.dimension; e++) {
+        stream << v[e];
+        if (e < v.dimension-1) {
+            stream << ", ";
+        }
+    }
+    stream << ")";
+    return stream;
+}
 
 
 ///-------------------------------------------------------------------------------
