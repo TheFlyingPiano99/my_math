@@ -21,10 +21,15 @@ public:
     Observer() {}
 };
 
+/**
+ * An absolute representation of the Spacetime.
+ *
+ */
 class Spacetime {
-
+    std::vector<Event*> events;
 public:
-    Spacetime() {}
+    Spacetime(): events() {}
+
 };
 
 #endif //MY_MATH_MY_SPECIAL_RELATIVITY_H
