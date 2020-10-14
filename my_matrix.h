@@ -98,6 +98,7 @@ public:
 
     Matrix& copyWithResize (const Matrix& M);
 
+
 };
 
 ///Multiplication
@@ -197,6 +198,13 @@ inline std::ostream &operator<<(std::ostream &stream, const Matrix &M) {
     }
     return stream;
 }
+
+/**
+ * Removes columns given by they index in std::vector<int>.
+ * @param toRemoveIndexes - indexes to remove
+ */
+void RemoveColumns(Matrix& M, std::vector<int> toRemoveIndexes);
+
 
 ///----------------------------------------------------------------------
 class Matrix2D {

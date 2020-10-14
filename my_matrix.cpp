@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "my_matrix.h"
 
+#include <algorithm>
 
 
 ///Global:
@@ -251,4 +252,19 @@ Matrix &Matrix::copyWithResize(const Matrix &M) {
         }
     }
     return *this;
+}
+
+void RemoveColumns(Matrix& M, std::vector<int> toRemoveIndexes) {
+    Matrix tempM(M.row, M.column - toRemoveIndexes.size());
+    //Fill up M with M-s data, except zero columns. (Might reduce number of columns by number of zero columns.)
+    int ct = 0; //Index of the temp matrix.
+    for (int c = 0; c < M.column; c++) {
+        if (toRemoveIndexes.end() == std::find(toRemoveIndexes.begin(), toRemoveIndexes.end(), c)) {
+            for (int i = 0; i < M.row; i++) {
+                tempM(i, ct) = M(i, c);
+            }
+            ct++;
+        }
+    }
+    M.copyWithResize(tempM);
 }

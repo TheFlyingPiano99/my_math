@@ -112,7 +112,7 @@ Graph *Graph::BFS_ReturnBreadthFirstTree(const int s) {
     auto g = new Graph(numOfTraversed);
     for (int i = 0; i < numOfTraversed; i++) {
         if (-1 != previous[traversed[i]]) {
-            g->addEdge(previous[traversed[i]], traversed[i]);
+            g->addDirectedEdge(previous[traversed[i]], traversed[i]);
         }
     }
     return g;
@@ -268,6 +268,24 @@ void* Graph::BFS(int s, ReturnType retT) {
         }
     }
     return retP;
+}
+
+///--------DFS-algorithm------------------------------------------------------------------
+
+void *Graph::DFS(const int s, Graph::ReturnType retT) {
+    switch (retT) {
+        case cycleM: {
+            return DFS_ReturnCycleM(s);
+        }
+        default:
+            return nullptr;
+    }
+}
+
+Matrix *Graph::DFS_ReturnCycleM(const int s) {
+    
+
+    return nullptr;
 }
 
 

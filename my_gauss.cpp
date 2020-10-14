@@ -9,10 +9,10 @@ Vector Gauss::Eliminate(Matrix &M) {
 
     SingularityFlag flag = Reduce(M);
     switch (flag) {
-        case noSolutin: {
+        case noSolution: {
             throw NoSolution();
         }
-        case infiniteSoultions: {
+        case infiniteSolutions: {
             throw InfiniteSolutions();
         }
         case cleanSolution: {
@@ -34,6 +34,7 @@ Vector Gauss::Eliminate(Matrix &M) {
 //---------------------------------------------------------------------------
         }
     }
+    return Vector(0);
 }
 
 
@@ -98,7 +99,7 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
     }
 
     if (M.column < M.row - 1) {
-        return SingularityFlag::infiniteSoultions;
+        return SingularityFlag::infiniteSolutions;
     }
 
 
@@ -111,7 +112,7 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
             for (int j = 0; j < M.row; j++) {   //Iterate element in current column
                 if (0 != M(j, i)) {
                     if (j == M.row-1) {     //Found a forbidden column, where all elements are 0 except the last element.
-                        return SingularityFlag::noSolutin;
+                        return SingularityFlag::noSolution;
                     }
                     foundNotZeroInColumn = true;
                     break;
@@ -123,28 +124,17 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
         }
 
         //Shrink matrix by removing zero columns:-----------------------
-        Matrix tempM(M.row, M.column - toRemoveIndexes.size());
-        //Fill up M with M-s data, except zero columns. (Might reduce number of columns by number of zero columns.)
-        int ct = 0; //Index of the temp matrix.
-        for (int c = 0; c < M.column; c++) {
-            if (toRemoveIndexes.end() == std::find(toRemoveIndexes.begin(), toRemoveIndexes.end(), c)) {
-                for (int i = 0; i < M.row; i++) {
-                    tempM(i, ct) = M(i, c);
-                }
-                ct++;
-            }
-        }
-        M.copyWithResize(tempM);
-        //--------------------------------------------------------------
+        RemoveColumns(M, toRemoveIndexes);
+
         if (M.column < M.row - 1) {
-            return SingularityFlag::infiniteSoultions;
+            return SingularityFlag::infiniteSolutions;
         }
 
         return SingularityFlag::cleanSolution;
     }
     else {
         return SingularityFlag::cleanSolution;
-        //return SingularityFlag::noSolutin;
+        //return SingularityFlag::noSolution;
     }
 }
 
@@ -154,5 +144,21 @@ void Gauss::SwapColumn(Matrix &M, int col1, int col2) {
         temp = M(r, col1);
         M(r, col1) = M(r, col2);
         M(r, col2) = temp;
+    }
+}
+
+Matrix CoefficientMatrix (const Matrix& M, const Vector& v) {
+    if (M.column == v.dimension) {
+        Matrix retM(M.row+1, M.column);
+        for (int c = 0; c < M.column; c++) {
+            for (int r = 0; r < M.row; r++) {
+                retM(r, c) = M(r, c);
+            }
+            retM(M.row, c) = v[c];
+        }
+        return retM;
+    }
+    else {
+        throw std::exception();
     }
 }

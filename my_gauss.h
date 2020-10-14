@@ -31,9 +31,9 @@ public:
     };
 
     enum SingularityFlag {
-        noSolutin,
+        noSolution,
         cleanSolution,
-        infiniteSoultions
+        infiniteSolutions
     };
 
     /**
@@ -50,9 +50,9 @@ public:
  * function to reduce matrix to r.e.f.
  * @param M - Matrix to reduce. Will be modified!
  * @return SingularityFlag: {
- *                              noSolutin,
+ *                              noSolution,
  *                              cleanSolution,
- *                              infiniteSoultions
+ *                              infiniteSolutions
  *                          }
  */
     static SingularityFlag Reduce(Matrix& M);
@@ -68,5 +68,7 @@ public:
      */
     static void SwapColumn (Matrix& M, int col1, int col2);
 };
+
+Matrix CoefficientMatrix (const Matrix& M, const Vector& v);
 
 #endif //MY_MATH_MY_GAUSS_H

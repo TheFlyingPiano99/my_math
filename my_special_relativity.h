@@ -5,8 +5,8 @@
 #ifndef MY_MATH_MY_SPECIAL_RELATIVITY_H
 #define MY_MATH_MY_SPECIAL_RELATIVITY_H
 
-#import "my_vector.h"
 #import "my_matrix.h"
+#import "my_vector.h"
 
 class Event {
     Vector4D p;
@@ -16,9 +16,16 @@ public:
 };
 
 class Observer {
-
+    Vector4D norm;
 public:
     Observer() {}
+
+    Vector4D transform(const Vector4D& v) {
+        Vector4D retV;
+
+
+        return retV;
+    }
 };
 
 /**

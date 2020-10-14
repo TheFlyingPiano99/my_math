@@ -80,6 +80,7 @@ int main() {
     }
     std::cout << "Sum = " << sum * 1.0 << std::endl;
 */
+/*
     Matrix M(3, 2);
 
     M(0,0) = 4;
@@ -111,6 +112,44 @@ int main() {
 
     std::cout << "Solution vector:" << std::endl;
     std::cout << sol << std::endl;
+*/
+
+
+    Graph g(4);
+    g.addDirectedEdge(0,1);
+    g.addDirectedEdge(1,2);
+    g.addDirectedEdge(2,3);
+    g.addDirectedEdge(3,0);
+
+    ///Current:
+
+    Matrix* incidence = (Matrix*)g.BFS(0, Graph::ReturnType::incidenceM);
+    std::cout << *incidence << std::endl;
+
+
+    Vector zero1(incidence->column);
+    zero1.fill(0);
+    Matrix currentCoeff = CoefficientMatrix(*incidence, zero1);
+    delete incidence;
+
+    Gauss::Eliminate(currentCoeff);
+
+    std::cout << currentCoeff << std::endl;
+
+    ///Voltage:
+    Matrix *cycle = (Matrix*)g.DFS(0, Graph::ReturnType::cycleM);
+    std::cout << *cycle << std::endl;
+
+
+    Vector zero2(cycle->column);
+    zero2.fill(0);
+    Matrix voltCoeff = CoefficientMatrix(*cycle, zero2);
+
+    Gauss::Eliminate(voltCoeff);
+
+    std::cout << voltCoeff << std::endl;
+
+    delete cycle;
 
     return 0;
 }

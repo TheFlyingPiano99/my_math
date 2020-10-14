@@ -10,11 +10,11 @@
 
 class Graph {
     const int v; //Number of vertices
-
+    int e;  //Number of edges
     std::list<int> *adj;
 
 public:
-    explicit Graph(int v): v(v) {
+    explicit Graph(int v): v(v), e(0) {
         adj = new std::list<int>[v];
     }
 
@@ -22,11 +22,12 @@ public:
         delete [] adj;
     }
 
-    void addEdge(int v, int w) {
+    void addDirectedEdge(int v, int w) {
         adj[v].push_back(w);
+        e++;
     }
 
-    void addEdge(char v, char w) {
+    void addDirectedEdge(char v, char w) {
         int vi;
         int wi;
         if ('a' <= v && v <= 'z') {
@@ -44,11 +45,14 @@ public:
         }
 
         adj[vi].push_back(wi);
+        e++;
     }
 
     void addUndirectedEdge(int v, int w) {
         adj[v].push_back(w);
+        e++;
         adj[w].push_back(v);
+        e++;
     }
 
     void addUndirectedEdge(char v, char w) {
@@ -69,7 +73,9 @@ public:
         }
 
         adj[vi].push_back(wi);
+        e++;
         adj[wi].push_back(vi);
+        e++;
     }
 
 
@@ -77,10 +83,12 @@ public:
         breadth_first_tree,
         adjacencyM,
         incidenceM,
-        distanceM
+        distanceM,
+        cycleM
     };
 
     void* BFS(const int s, ReturnType retT);
+    void* DFS(const int s, ReturnType retT);
 
     Matrix AdjacencyMatrix() {
         Matrix retM(v, v);
@@ -93,12 +101,27 @@ public:
         return retM;
     }
 
+    Matrix IncidenceMatrix() {
+        auto mx = Matrix(e, v);
+        mx.fill(0);
+        int edge = 0;
+        for (int from = 0; from < v; from++) {
+            for (auto& to : adj[from]) {
+                mx(edge, from) = 1;
+                mx(edge, to) = -1;
+                edge++;
+            }
+        }
+        return mx;
+    }
 
 protected:
     Graph* BFS_ReturnBreadthFirstTree (const int s);
     Matrix* BFS_ReturnAdjacencyM (const int s);
     Matrix* BFS_ReturnIncidenceM (const int s);
     Matrix* BFS_ReturnDistanceM (const int s);
+
+    Matrix* DFS_ReturnCycleM (const int s);
 };
 
 
