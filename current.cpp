@@ -22,6 +22,14 @@ Vector Circuit::calculateCurrentOnLinear(const Graph &g, const Vector &r, const 
     cycle(0,0) = 0;       //Resistance of ideal voltage source is 0;
     //std::cout << cycle;
 
+    Matrix system = buildSystem(g, incidence, cycle, U0);
+
+    std::cout << system << std::endl;
+
+    return Gauss::Eliminate(system);
+}
+
+Matrix Circuit::buildSystem(const Graph& g, const Matrix& incidence, const Matrix& cycle, const Vector& U0) {
     Matrix system(g.getNumberOfEdges() + 1, incidence.column + cycle.column);
     //The left  side of the system: (First e columns are the columns of the incidence matrix.
     //                              The remaining part of the matrix is the cycle matrix * resistance of the edges)
@@ -54,7 +62,6 @@ Vector Circuit::calculateCurrentOnLinear(const Graph &g, const Vector &r, const 
         }
     }
 
-    std::cout << system << std::endl;
 
-    return Gauss::Eliminate(system);
+    return system;
 }

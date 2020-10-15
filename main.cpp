@@ -231,6 +231,7 @@ int main() {
     std::cout << Gauss::Eliminate(coeffU) << std::endl;*/
 
     //Define network:
+
     Graph g(3);
     g.addDirectedEdge(0,1);
     g.addDirectedEdge(1,2);
@@ -243,23 +244,19 @@ int main() {
     std::cout << "Incidence:\n" << *incidence << std::endl;
     std::cout << "Base Cycle:\n" << *baseCycle << std::endl;
 
-    delete incidence;
-    delete baseCycle;
 
-/*
+    Vector sourceU(baseCycle->column);
 
-    //Define the resistances of the edges:
     Vector r(g.getNumberOfEdges());
     r.fill(10);
-    std:: cout << r << std::endl;
-    //Define sources:
-    Vector U0(1);
-    U0[0] = 10;
 
-    std::cout << Circuit::calculateCurrentOnLinear(g, r, U0);
-*/
+    sourceU.fill(0);
+    sourceU[0] = 10;
 
+    std::cout << Circuit::calculateCurrentOnLinear(g, r, sourceU);
 
+    delete incidence;
+    delete baseCycle;
 
     return 0;
 }

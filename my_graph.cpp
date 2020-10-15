@@ -354,18 +354,34 @@ void Graph::DFS_forCircuit(Matrix** incidence, Matrix** baseCycle) {
         }
     }
     *incidence = new Matrix(this->e, this->v);
-    //TODO
-
-    //Getting fundamental base cycles:
-    int noOfCycles = 0;
+    (*incidence)->fill(0);
     for (int i = 0; i < this->v; i++) {
-/*        if () {
-            noOfCycles++;
-        }*/
-        //TODO
+        if (-1 != previous[i]) {
+            (**incidence)(i, previous[i]) = 1;
+            (**incidence)(i, i) = -1;
+        }
     }
 
-    *baseCycle = new Matrix(this->e,noOfCycles);
+    //Getting fundamental base cycles:
+    int noOfCycles = 0;             //First count the cycles:
+    for (int i = 0; i < this->v; i++) {
+        if (-1 == previous[i]) {
+            noOfCycles++;
+        }
+    }
+    *baseCycle = new Matrix(this->e, noOfCycles);
+    (*baseCycle)->fill(0);
+    for (int i = 0; i < this->v; i++) {     //Then fill cycle matrix
+        if (-1 == previous[i]) {
+            (**baseCycle)(i, i) = 1;
+            for (int j = 0; j < this->v; j++) {
+                if (-1 != previous[j]) {
+                    (**baseCycle)(j, i) = 1;
+                }
+            }
+        }
+        //TODO
+    }
 }
 
 
