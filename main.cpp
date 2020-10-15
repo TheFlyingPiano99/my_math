@@ -5,6 +5,7 @@
 #include <time.h>
 #include <math.h>
 #include "my_gauss.h"
+#include "current.h"
 
 int randBit() {
     return std::rand()%2;
@@ -237,56 +238,13 @@ int main() {
 
     //Define the resistances of the edges:
     Vector r(g.getNumberOfEdges());
-
-    //Create incidence (for i1 + i2 + ... = i_source) and cycle (for i1*r1 + i2*r2 +... = U0) matrix of the network:
-    Matrix incidence = g.IncidenceMatrix();
-    Matrix cycle(3, 1);
-    cycle(0, 0) = 1;
-    cycle(1, 0) = 1;
-    cycle(2, 0) = 1;
-
-    //Multiply by resistance: (i1*r1 + i2*r2 = U0)
-    for (int i = 0; i < g.getNumberOfEdges(); i++) {
-        MultiplyRow(cycle, i, r[i]);
-    }
-
+    r.fill(10);
+    std:: cout << r << std::endl;
+    //Define sources:
     Vector U0(1);
     U0[0] = 10;
 
-    Matrix system(g.getNumberOfEdges() + 1, incidence.column + cycle.column);
-    //The left  side of the system: (First e columns are the columns of the incidence matrix.
-    //                              The remaining part of the matrix is the cycle matrix * resistance of the edges)
-    //The right side of the system: (first e elements 0, then U0, if the source is part of given cycle)
-    //_______________________________
-    //| incidence   |  cycle matrix |   V -edges
-    //|  matrix     |    * R        |   V
-    //-------------------------------
-    //|   0000000   |   U0 / 0      |   <- right side of equations.
-    //-------------------------------
-
-    for (int c = 0; c < system.column; c++) {
-        for (int r = 0; r < system.row; r++) {
-            if (g.getNumberOfVertices() <= c) {
-                if (r == system.row-1) {
-                    system(r, c) = U0[c - g.getNumberOfVertices()];
-                }
-                else {
-                    system(r, c) = cycle(r, c - g.getNumberOfVertices());
-                }
-            }
-            else if (g.getNumberOfVertices() > c) {
-                if (r == system.row-1) {
-                    system(r, c) = 0;
-                }
-                else {
-                    system(r, c) = incidence(r, c);
-                }
-            }
-        }
-    }
-
-    std::cout << system << std::endl;
-    std::cout << Gauss::Eliminate(system);
+    std::cout << Circuit::calculateCurrentOnLinear(g, r, U0);
 
     return 0;
 }

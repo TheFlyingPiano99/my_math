@@ -22,11 +22,11 @@ public:
         delete [] adj;
     }
 
-    int getNumberOfVertices () {
+    int getNumberOfVertices () const {
         return v;
     }
 
-    int getNumberOfEdges () {
+    int getNumberOfEdges () const {
         return e;
     }
 
@@ -109,7 +109,7 @@ public:
         return retM;
     }
 
-    Matrix IncidenceMatrix() {
+    Matrix IncidenceMatrix() const {
         auto mx = Matrix(e, v);
         mx.fill(0);
         int edge = 0;
@@ -126,7 +126,7 @@ public:
     Matrix CycleBaseMatrix () {
         //TODO
         ;
-
+        return Matrix(0,0);
     }
 
 protected:
