@@ -256,7 +256,7 @@ Matrix &Matrix::copyWithResize(const Matrix &M) {
 
 void RemoveColumns(Matrix& M, std::vector<int> toRemoveIndexes) {
     Matrix tempM(M.row, M.column - toRemoveIndexes.size());
-    //Fill up M with M-s data, except zero columns. (Might reduce number of columns by number of zero columns.)
+
     int ct = 0; //Index of the temp matrix.
     for (int c = 0; c < M.column; c++) {
         if (toRemoveIndexes.end() == std::find(toRemoveIndexes.begin(), toRemoveIndexes.end(), c)) {
@@ -268,3 +268,54 @@ void RemoveColumns(Matrix& M, std::vector<int> toRemoveIndexes) {
     }
     M.copyWithResize(tempM);
 }
+
+Matrix Identity(int size) {
+    Matrix retM(size, size);
+    retM.fill(0);
+    for (int i = 0; i < size; i++) {
+        retM(i,i) = 1.0f;
+    }
+    return retM;
+}
+
+Matrix Diagonal(const Vector& v) {
+    Matrix retM(v.dimension, v.dimension);
+    retM.fill(0);
+    for (int i = 0; i < v.dimension; i++) {
+        retM(i,i) = v[i];
+    }
+    return retM;
+}
+
+void RemoveRows(Matrix &M, std::vector<int> toRemoveIndexes) {
+    Matrix tempM(M.row - toRemoveIndexes.size(), M.column);
+
+    int rt = 0; //Index of the temp matrix.
+    for (int r = 0; r < M.row; r++) {
+        if (toRemoveIndexes.end() == std::find(toRemoveIndexes.begin(), toRemoveIndexes.end(), r)) {
+            for (int i = 0; i < M.column; i++) {
+                tempM(rt, i) = M(r, i);
+            }
+            rt++;
+        }
+    }
+    M.copyWithResize(tempM);
+
+}
+
+Matrix MultiplyRow(const Matrix& M, const int row, const  float val) {
+    Matrix retM(M.row, M.column);
+    for (int c = 0; c < M.column; c++) {
+        retM(row, c) = M(row, c) * val;
+    }
+    return retM;
+}
+
+Matrix MultipyColumn(const Matrix& M, const int column, const  float val) {
+    Matrix retM(M.row, M.column);
+    for (int r = 0; r < M.row; r++) {
+        retM(r, column) = M(r, column) * val;
+    }
+    return retM;
+}
+

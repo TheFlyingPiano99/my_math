@@ -22,6 +22,14 @@ public:
         delete [] adj;
     }
 
+    int getNumberOfVertices () {
+        return v;
+    }
+
+    int getNumberOfEdges () {
+        return e;
+    }
+
     void addDirectedEdge(int v, int w) {
         adj[v].push_back(w);
         e++;
@@ -113,6 +121,12 @@ public:
             }
         }
         return mx;
+    }
+
+    Matrix CycleBaseMatrix () {
+        //TODO
+        ;
+
     }
 
 protected:

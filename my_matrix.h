@@ -127,11 +127,23 @@ inline Vector operator*(const Matrix &M, const Vector &v) {
         for (unsigned int k = 0; k < M.column; k++) {
             n += M(r, k) * v[k];
         }
-        retV[r] = n;
     }
     return retV;
 }
 
+inline Matrix operator*(const Vector &v, const Matrix &M) {
+    Matrix retM(M.row, M.column);
+    for (unsigned int c = 0; c < M.column; c++) {
+        for (unsigned int r = 0; r < M.row; r++) {
+            float n = 0;
+            for (unsigned int k = 0; k < M.row; k++) {
+                n += v[r] * M(k, c);
+            }
+            retM(r, c) = n;
+        }
+    }
+    return retM;
+}
 
 inline Matrix operator*(float s, const Matrix &M) {
     Matrix retM(M.row, M.column);
@@ -199,12 +211,39 @@ inline std::ostream &operator<<(std::ostream &stream, const Matrix &M) {
     return stream;
 }
 
+Matrix Identity(int size);
+
+/**
+ * The diagonal of this matrix is occupied by the elements of the v vector.
+ * @param v vector
+ * @return matrix
+ */
+Matrix Diagonal(const Vector& v);
+
+
 /**
  * Removes columns given by they index in std::vector<int>.
  * @param toRemoveIndexes - indexes to remove
  */
 void RemoveColumns(Matrix& M, std::vector<int> toRemoveIndexes);
 
+/**
+ * Removes rows given by they index in std::vector<int>.
+ * @param toRemoveIndexes - indexes to remove
+ */
+void RemoveRows(Matrix& M, std::vector<int> toRemoveIndexes);
+
+/**
+ * Multiply row by val
+ * @param val - factor
+ */
+Matrix MultiplyRow(const Matrix& M, const int row, const  float val);
+
+/**
+ * Multiply column by val
+ * @param val - factor
+ */
+Matrix MultipyColumn(const Matrix& M, const int column, const float val);
 
 ///----------------------------------------------------------------------
 class Matrix2D {
