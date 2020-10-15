@@ -19,6 +19,7 @@ Vector Circuit::calculateCurrentOnLinear(const Graph &g, const Vector &r, const 
         cycle = MultiplyRow(cycle, i, r[i]);
     }
     cycle.fill(10);
+    cycle(0,0) = 0;       //Resistance of ideal voltage source is 0;
     //std::cout << cycle;
 
     Matrix system(g.getNumberOfEdges() + 1, incidence.column + cycle.column);
