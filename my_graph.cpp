@@ -288,5 +288,85 @@ Matrix *Graph::DFS_ReturnCycleM(const int s) {
     return nullptr;
 }
 
+void Graph::DFS_forCircuit(Matrix** incidence, Matrix** baseCycle) {
+    int s = 0;  //Starting vertex
+
+    int depth[v]; /*vertex*/
+    int finish[v]; /*vertex*/
+    int previous[v]; /*vertex*/
+    int current;
+    int GreatestDepth;
+    int GreatestFinish;
+
+    ///Init:
+    depth[s] = 1;
+
+    ///Using -1 as undefined value:
+    previous[s] = -1;
+    for (int i = 0; i < v; i++) {
+        if (s != i) {
+            depth[i] = -1;
+        }
+        finish[i] = -1;
+        previous[i] = -1;
+    }
+
+    GreatestDepth = 1;
+    GreatestFinish = 0;
+    current = s;
+
+    ///Cycle:
+    bool run = true;
+    while (run) {
+        ///Finding adjacent vertex with (*) depth:
+        int v = current;
+        for (auto &iter : adj[current]) {
+            if (-1 == depth[iter]) {
+                v = iter;
+                break;
+            }
+        }
+        if (current != v) { //Found adjacent vertex with (*) depth
+            GreatestDepth++;
+            depth[v] = GreatestDepth;
+            previous[v] = current;
+            current = v;
+        } else {
+            GreatestFinish++;
+            finish[current] = GreatestFinish;
+            if (-1 != previous[current]) {
+                current = previous[current];
+            } else {
+                ///Finding vertex with (*) depth:
+                int v = current;
+                for (int i = 0; i < this->v; i++) {
+                    if (-1 == depth[i]) {
+                        v = i;
+                        break;
+                    }
+                }
+                if (current != v) { //Found adjacent vertex with (*) depth
+                    current = v;
+                } else {
+                    run = false;
+                }
+            }
+        }
+    }
+    *incidence = new Matrix(this->e, this->v);
+    //TODO
+
+    //Getting fundamental base cycles:
+    int noOfCycles = 0;
+    for (int i = 0; i < this->v; i++) {
+/*        if () {
+            noOfCycles++;
+        }*/
+        //TODO
+    }
+
+    *baseCycle = new Matrix(this->e,noOfCycles);
+}
+
 
 

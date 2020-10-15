@@ -98,6 +98,13 @@ public:
     void* BFS(const int s, ReturnType retT);
     void* DFS(const int s, ReturnType retT);
 
+    /**
+     * DFS algorithm, specifically for circuit analysis.
+     * @param incidence - Matrix** Will be loaded with solution. (Needs to be deleted after!)
+     * @param baseCycle - Matrix** Will be loaded with solution. (Needs to be deleted after!)
+     */
+    void DFS_forCircuit(Matrix** incidence, Matrix** baseCycle);
+
     Matrix AdjacencyMatrix() {
         Matrix retM(v, v);
         retM.fill(0);

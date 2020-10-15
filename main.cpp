@@ -236,6 +236,18 @@ int main() {
     g.addDirectedEdge(1,2);
     g.addDirectedEdge(2,0);
 
+    Matrix* incidence, *baseCycle;
+    //Test of new function:
+    g.DFS_forCircuit(&incidence, &baseCycle);
+
+    std::cout << "Incidence:\n" << *incidence << std::endl;
+    std::cout << "Base Cycle:\n" << *baseCycle << std::endl;
+
+    delete incidence;
+    delete baseCycle;
+
+/*
+
     //Define the resistances of the edges:
     Vector r(g.getNumberOfEdges());
     r.fill(10);
@@ -245,6 +257,9 @@ int main() {
     U0[0] = 10;
 
     std::cout << Circuit::calculateCurrentOnLinear(g, r, U0);
+*/
+
+
 
     return 0;
 }
