@@ -283,6 +283,12 @@ int main() {
 
     std::cout << "y = " << y << std::endl;
 
+    Matrix2D m2(1,2,
+                2,1);
+    std::cout << Inverse(m2)(0,0) << ", " << Inverse(m2)(0,1) << std::endl;
+    std::cout << Inverse(m2)(1,0) << ", " << Inverse(m2)(1,1) << std::endl << std::endl;
+
+
     Matrix3D m(1,2,3,
                 3,2,1,
                 2,1,3);

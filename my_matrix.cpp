@@ -62,6 +62,15 @@ float Determinant(const Matrix2D &M) {
     return (M(0,0) * M(1,1)  - M(0,1) * M(1,0));
 }
 
+Matrix2D Inverse(const Matrix2D &M) {
+    float invDet = 1.0f / Determinant(M);
+    return Matrix2D(
+                M(1,1) * invDet, -M(0,1) * invDet,
+               -M(1,0) * invDet,  M(0,0) * invDet
+            );
+}
+
+
 ///----------------------------------------------------------------------------
 ///3D:
 
@@ -376,6 +385,3 @@ Matrix MultipyColumn(const Matrix& M, const int column, const  float val) {
     }
     return retM;
 }
-
-
-

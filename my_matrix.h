@@ -294,6 +294,7 @@ Matrix2D operator-(const Matrix2D& A, const Matrix2D& B);
 
 float Determinant (const Matrix2D& M);
 
+Matrix2D Inverse (const Matrix2D& M);
 
 ///-------------------------------------------------------------------
 class Matrix3D {
