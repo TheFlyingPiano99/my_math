@@ -5,6 +5,7 @@
 #ifndef MY_MATH_MY_SPECIAL_RELATIVITY_H
 #define MY_MATH_MY_SPECIAL_RELATIVITY_H
 
+/*
 #import "my_matrix.h"
 #import "my_vector.h"
 
@@ -27,16 +28,18 @@ public:
         return retV;
     }
 };
-
+*/
 /**
  * An absolute representation of the Spacetime.
  *
  */
+/*
 class Spacetime {
     std::vector<Event*> events;
 public:
     Spacetime(): events() {}
 
 };
+*/
 
 #endif //MY_MATH_MY_SPECIAL_RELATIVITY_H

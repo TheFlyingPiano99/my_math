@@ -283,6 +283,22 @@ int main() {
 
     std::cout << "y = " << y << std::endl;
 
+    Matrix3D m(1,2,3,
+                3,2,1,
+                2,1,3);
+    std::cout << Inverse(m)(0,0) << ", " << Inverse(m)(0,1) << ", " << Inverse(m)(0, 2) << std::endl;
+    std::cout << Inverse(m)(1,0) << ", " << Inverse(m)(1,1) << ", " << Inverse(m)(1, 2) << std::endl;
+    std::cout << Inverse(m)(2,0) << ", " << Inverse(m)(2,1) << ", " << Inverse(m)(2, 2) << std::endl;
+
+    Matrix4D m4d(1,10,5, 0,
+               0,6,0, 0,
+               0,0,1, 0,
+               0,0,6,8);
+    std::cout << Inverse(m4d)(0,0) << ", " << Inverse(m4d)(0,1) << ", " << Inverse(m4d)(0, 2) << std::endl;
+    std::cout << Inverse(m4d)(1,0) << ", " << Inverse(m4d)(1,1) << ", " << Inverse(m4d)(1, 2) << std::endl;
+    std::cout << Inverse(m4d)(2,0) << ", " << Inverse(m4d)(2,1) << ", " << Inverse(m4d)(2, 2) << std::endl;
+    std::cout << Inverse(m4d)(3,0) << ", " << Inverse(m4d)(3,1) << ", " << Inverse(m4d)(3, 2) << std::endl;
+
     return 0;
 }
 
