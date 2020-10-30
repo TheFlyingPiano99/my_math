@@ -228,11 +228,14 @@ int main() {
     sourceU[0] = 10;
     Matrix coeffU = CoefficientMatrix(*cycle, sourceU);
     std::cout << coeffU ;
-    std::cout << Gauss::Eliminate(coeffU) << std::endl;*/
+    std::cout << Gauss::Eliminate(coeffU) << std::endl;
+    */
 
     //Define network:
-
+/*
+ * Working:
     Graph g(3);
+
     g.addDirectedEdge(0,1);
     g.addDirectedEdge(1,2);
     g.addDirectedEdge(2,0);
@@ -257,7 +260,30 @@ int main() {
 
     delete incidence;
     delete baseCycle;
+*/
+/*
+    Matrix2D L1(-0.2271,0.8179,-0.3408,1.2271);
+    Matrix2D L2(1.2271,-0.8179,0.3408,-0.2271);
+    Matrix2D Diff;
+    Diff = L1 - L2;
+
+    std::cout << Diff(0,0) << ", " <<  Diff(0,1) << ", " << Diff(1,0) << ", " << Diff(1,1) << std::endl;
+
+*/
+    #define PI 3.14159265
+
+    double y = 0;
+    double k = 2.0;
+
+    for (int i = 0; i <= k; i++) {
+        y += -10 * pow(0.9, (double)(k-i)) * cos(((2*PI)/5) * (k-i) + 0.4)
+                * (((i == 0)? 1 : 0) * 10 - 6 * pow(-0.5, (double)(i+1)));
+    }
+    std::cout << "cos = " << cos(PI) << std::endl;
+
+    std::cout << "y = " << y << std::endl;
 
     return 0;
 }
+
 

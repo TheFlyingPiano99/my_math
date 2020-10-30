@@ -217,7 +217,7 @@ float Determinant(const Matrix4D &m) {
                 m(0,1) * m(1,0) * m(2,2) * m(3,3) + m(0,0) * m(1,1) * m(2,2) * m(3,3)
             );
 }
-
+/*
 #include "my_gauss.h"
 
 float Determinant(const Matrix &M) {
@@ -225,7 +225,7 @@ float Determinant(const Matrix &M) {
     Gauss::Eliminate(tempM);
     return 0;
 }
-
+*/
 
 Matrix &Matrix::operator=(const Matrix &M) {
     if (this != &M) {

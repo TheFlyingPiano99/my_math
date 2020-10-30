@@ -237,7 +237,6 @@ inline Vector2D operator- (const Vector2D& a, const Vector2D& b) {
     return (Vector2D(a.x-b.x, a.y-b.y));
 }
 
-
 ///Trigonometry:
 float Sin (Vector2D v1, Vector2D v2);
 
@@ -245,6 +244,15 @@ float Sin (Vector2D v1, Vector2D v2);
 float Cos (Vector2D v1, Vector2D v2);
 
 float Tan (Vector2D v1, Vector2D v2);
+
+///Project/Reject:
+inline Vector2D Project (const Vector2D& a, const Vector2D& b) {
+    return Vector2D(b * (Dot(a, b) / Dot(b, b)));
+}
+
+inline Vector2D Reject (const Vector2D& a, const Vector2D& b) {
+    return Vector2D(a - b * (Dot(a, b) / Dot(b, b)));
+}
 
 ///------------------------------------------------------
 
@@ -407,6 +415,14 @@ inline Vector4D operator- (const Vector4D& a, const Vector4D& b) {
     return (Vector4D(a.x-b.x, a.y-b.y, a.z-b.z, a.w-b.w));
 }
 
+///Project/Reject:
+inline Vector4D Project (const Vector4D& a, const Vector4D& b) {
+    return Vector4D(b * (Dot(a, b) / Dot(b, b)));
+}
+
+inline Vector4D Reject (const Vector4D& a, const Vector4D& b) {
+    return Vector4D(a - b * (Dot(a, b) / Dot(b, b)));
+}
 
 
 #endif // SAJAT_TIPUSOK_H_INCLUDED
