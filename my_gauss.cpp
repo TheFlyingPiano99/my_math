@@ -60,7 +60,7 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
             if (c < M.column - 1) {
                 //Add the -M(r, i) * M[c] column to all "M[i]" columns:
                 for (int i = c+1; i < M.column; i++) {
-                    int fact = M(r, i);
+                    float fact = M(r, i);
                     for (int j = 0; j < M.row; j++) {
                         M(j, i) -= fact * M(j, c);
                     }
@@ -105,7 +105,6 @@ Gauss::SingularityFlag Gauss::Reduce(Matrix& M) {
 
     //Final steps of Reduce:
     if (c < M.column-1) {
-        bool zeroColumn = false;
         std::vector<int> toRemoveIndexes;     //Only if shrink matrix section is not commented out.
         for (int i = c; i < M.column; i++) {    //Iterate on columns
             bool foundNotZeroInColumn = false;

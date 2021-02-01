@@ -124,25 +124,24 @@ inline Vector operator*(const Matrix &M, const Vector &v) {
     Vector retV(M.row);
     for (unsigned int r = 0; r < M.row; r++) {
         float n = 0;
-        for (unsigned int k = 0; k < M.column; k++) {
-            n += M(r, k) * v[k];
+        for (unsigned int c = 0; c < M.column; c++) {
+            n += M(r, c) * v[c];
         }
+        retV[r] = n;
     }
     return retV;
 }
 
-inline Matrix operator*(const Vector &v, const Matrix &M) {
-    Matrix retM(M.row, M.column);
+inline Vector operator*(const Vector &v, const Matrix &M) {
+    Vector retV(M.row);
     for (unsigned int c = 0; c < M.column; c++) {
+        float n = 0;
         for (unsigned int r = 0; r < M.row; r++) {
-            float n = 0;
-            for (unsigned int k = 0; k < M.row; k++) {
-                n += v[r] * M(k, c);
-            }
-            retM(r, c) = n;
+            n += v[r] * M(r, c);
         }
+        retV[c] = n;
     }
-    return retM;
+    return retV;
 }
 
 inline Matrix operator*(float s, const Matrix &M) {
