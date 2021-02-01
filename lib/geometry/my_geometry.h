@@ -5,7 +5,7 @@
 #ifndef MY_MATH_MY_GEOMETRY_H
 #define MY_MATH_MY_GEOMETRY_H
 
-#include "my_vector.h"
+#include "../vector/my_vector.h"
 
 
 class Line3D {

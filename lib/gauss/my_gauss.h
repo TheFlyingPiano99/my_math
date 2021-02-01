@@ -5,7 +5,7 @@
 #ifndef MY_MATH_MY_GAUSS_H
 #define MY_MATH_MY_GAUSS_H
 
-#include "my_matrix.h"
+#include "../matrix/my_matrix.h"
 
 class Vector;
 
