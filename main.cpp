@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "MathConfig.h"
 
-#include <time.h>
 #include <math.h>
 #include <my_matrix.h>
 
