@@ -5,7 +5,7 @@
 #ifndef LEGITARSASAG_ANALISE_H
 #define LEGITARSASAG_ANALISE_H
 #include <cmath>
-#include "matrix/my_matrix.h"
+#include "my_matrix.h"
 //#include <vector>
 
 class vector;

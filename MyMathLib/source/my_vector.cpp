@@ -1,7 +1,7 @@
 //
 // Created by simon on 2020. 06. 27..
 //
-#include "my_vector.h"
+#include "../include/my_vector.h"
 
 Vector &Vector::operator*=(float s) {
     for (unsigned int i = 0; i < dimension; i++) {

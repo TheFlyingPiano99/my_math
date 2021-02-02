@@ -5,9 +5,9 @@
 #ifndef MY_MATH_CURRENT_H
 #define MY_MATH_CURRENT_H
 
-#include "matrix/my_matrix.h"
-#include "vector/my_vector.h"
-#include "graph/my_graph.h"
+#include "my_matrix.h"
+#include "my_vector.h"
+#include "my_graph.h"
 
 class Circuit {
 public:

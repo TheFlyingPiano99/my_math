@@ -8,7 +8,7 @@
 #include <complex>
 #include <vector>
 
-#include "../vector/my_vector.h"
+#include "my_vector.h"
 
 #include <unordered_map>
 

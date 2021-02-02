@@ -2,7 +2,7 @@
 // Created by simon on 2020. 09. 13..
 //
 
-#include "my_graph.h"
+#include "../include/my_graph.h"
 
 Matrix* Graph::BFS_ReturnDistanceM (const int s) {
     int traversed[/*iterall*/v];

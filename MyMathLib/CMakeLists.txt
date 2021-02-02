@@ -1,0 +1,11 @@
+add_library(MyMathLib
+            source/Analise.cpp
+            source/current.cpp
+            source/my_functions.cpp
+            source/my_gauss.cpp
+            source/my_geometry.cpp
+            source/my_graph.cpp
+            source/my_matrix.cpp
+            source/my_special_relativity.cpp
+            source/my_vector.cpp
+        )

@@ -3,7 +3,7 @@
 //
 
 #include <stdexcept>
-#include "my_matrix.h"
+#include "../include/my_matrix.h"
 
 #include <algorithm>
 

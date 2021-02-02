@@ -1,6 +1,23 @@
 cmake_minimum_required(VERSION 3.16)
-project(my_math)
+project(MyMathDemo VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(my_math main.cpp lib/matrix/my_matrix.cpp lib/functions/my_functions.cpp lib/analise/Analise.cpp lib/my_math.h lib/vector/my_vector.cpp lib/graph/my_graph.cpp lib/graph/my_graph.h lib/gauss/my_gauss.cpp lib/gauss/my_gauss.h lib/binary/my_binary.cpp lib/binary/my_binary.h lib/geometry/my_geometry.cpp lib/geometry/my_geometry.h lib/relativity/my_special_relativity.cpp lib/relativity/my_special_relativity.h lib/current/current.cpp lib/current/current.h)
+configure_file(Config.h.in Config.h)
+
+
+add_subdirectory(MyMathLib)
+#add_subdirectory(Google_tests)
+
+LIST(APPEND EXTRA_LIBS MyMathLib)
+LIST(APPEND EXTRA_INCLUDES ${PROJECT_SOURCE_DIR}/MyMathLib/include)
+
+add_executable(MyMathDemo main.cpp)
+
+target_link_libraries(MyMathDemo ${EXTRA_LIBS})
+
+target_include_directories(MyMathDemo PUBLIC
+        ${PROJECT_BINARY_DIR}
+        ${EXTRA_INCLUDES}
+)
+

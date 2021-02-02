@@ -2,7 +2,7 @@
 // Created by simon on 2020. 09. 13..
 //
 
-#include "my_gauss.h"
+#include "../include/my_gauss.h"
 #include <algorithm>
 
 Vector Gauss::Eliminate(Matrix &M) {

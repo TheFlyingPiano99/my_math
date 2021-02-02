@@ -6,7 +6,7 @@
 #define MY_MATH_MY_GRAPH_H
 
 #include <list>
-#include "../matrix/my_matrix.h"
+#include "my_matrix.h"
 
 class Graph {
     const int v; //Number of vertices

@@ -2,8 +2,8 @@
 // Created by simon on 2020. 10. 15..
 //
 
-#include "current.h"
-#include "gauss/my_gauss.h"
+#include "../include/current.h"
+#include "../include/my_gauss.h"
 
 Vector Circuit::calculateCurrentOnLinear(const Graph &g, const Vector &r, const Vector &U0) {
     //Create incidence (for i1 + i2 + ... = i_source) and cycle (for i1*r1 + i2*r2 +... = U0) matrix of the network:

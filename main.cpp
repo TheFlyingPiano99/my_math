@@ -1,11 +1,10 @@
 #include <iostream>
 
-#include "lib/my_math.h"
-#include "graph/my_graph.h"
+#include "MathConfig.h"
+
 #include <time.h>
 #include <math.h>
-#include "gauss/my_gauss.h"
-#include "lib/current/current.h"
+#include <my_matrix.h>
 
 int randBit() {
     return std::rand()%2;

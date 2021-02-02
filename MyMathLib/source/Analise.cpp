@@ -2,7 +2,7 @@
 // Created by simon on 2020. 05. 25..
 //
 
-#include "Analise.h"
+#include "../include/Analise.h"
 /*
 template<unsigned int r, unsigned int c>
 void Analiser::create_discrete_fourier_transform_mx (const std::complex<float>& omega, Matrix<r, c>& ebbe) {
